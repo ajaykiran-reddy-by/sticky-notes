@@ -53,12 +53,24 @@ export default function TodoCard({ open, onClose }: TodoCardProps) {
           required
           margin="dense"
           id="Task-Name"
+          name="Task Name"
+          label="Task Name"
+          type="text"
+          fullWidth
+          variant="standard"
+        />
+        <TextField
+          autoFocus
+          required
+          margin="dense"
+          id=""
           name="Name"
           label="Task Name"
           type="text"
           fullWidth
           variant="standard"
         />
+        
       </DialogContent>
       <DialogActions>
         <Button onClick={onClose}>Close</Button>
