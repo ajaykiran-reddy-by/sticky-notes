@@ -70,7 +70,6 @@ export default function TodoCard({ open, onClose }: TodoCardProps) {
           fullWidth
           variant="standard"
         />
-        
       </DialogContent>
       <DialogActions>
         <Button onClick={onClose}>Close</Button>
@@ -78,3 +77,4 @@ export default function TodoCard({ open, onClose }: TodoCardProps) {
     </Dialog>
   );
 }
+console.log('HI')
