@@ -1,31 +1,38 @@
-import { useState } from "react";
-import reactLogo from "./assets/react.svg";
-import viteLogo from "/vite.svg";
+import {
+  AppBar,
+  Box,
+  Button,
+  Grid2,
+  IconButton,
+  Toolbar,
+  Typography,
+} from "@mui/material";
 import "./App.css";
-import { Button } from "@mui/material";
+import { Menu } from "@mui/icons-material";
 
 function App() {
-  const [count, setCount] = useState(0);
-
   return (
-    <>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <Button
-          onClick={() => setCount((count) => count + 1)}
-          color="primary"
-          variant="contained"
-        >
-          count is {count}
-        </Button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
+    <AppBar style={{ width: "100%", padding: "0.5rem" }} position="static">
+      <Grid2
+        container
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+        }}
+      >
+        <Grid2 size={4}>
+          <Typography variant="h6" color="inherit" component="div">
+            Team A
+          </Typography>
+        </Grid2>
+        <Grid2 size={8} style={{ textAlign: "end" }}>
+          <Button variant="outlined" color="secondary">
+            Add Todo
+          </Button>
+        </Grid2>
+      </Grid2>
+    </AppBar>
   );
 }
 
