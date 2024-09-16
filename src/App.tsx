@@ -47,6 +47,7 @@ function App() {
       <Grid2 container width={'100%'} bgcolor={'#FFFFFF'} height={'100vh'}>
           <WorkspaceArea/>
       </Grid2>
+      <div style={{width: '200px', height: '200px', backgroundColor: 'red'}}></div>
       <TodoCard open={openDialog} onClose={handleCloseDialog} />   
     </React.Fragment>
   );

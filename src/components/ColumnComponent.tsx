@@ -9,6 +9,8 @@ const ColumnComponent = (
         cards,
         handleDragOver,
         handleDrop,
+        handleDragStart,
+        handleDragEnd,
       }: {
         colId: number,
         colName: string;
@@ -23,13 +25,15 @@ const ColumnComponent = (
         }[];
         handleDragOver: Function;
         handleDrop: Function;
+        handleDragStart: Function;
+        handleDragEnd: Function;
       }
 ) => {
 
 
   return (
     <Grid2 size={6}>
-        <Grid2 container direction={'column'} width={'100%'} border={'1px solid black'} onDragOver={()=> handleDragOver} onDrop={(e: any) => handleDrop(e, colId)}>
+        <Grid2 container direction={'column'} width={'100%'} border={'1px solid black'} onDragOver={() => handleDragOver} onDrop={(e: any) => handleDrop(e, colId)}>
             <Grid2>
                 <Typography variant="h5" align="left" color='primary'>
                     {colName}
@@ -37,7 +41,10 @@ const ColumnComponent = (
             </Grid2>
             <Grid2 container justifyContent={'center'} spacing={2}>
                     {cards.map((card) => (
-                    <TaskCardComponent key={card.id} {...card} />
+                    <TaskCardComponent 
+                    handleDragStart={handleDragStart}
+                    handleDragEnd={handleDragEnd}
+                    key={card.id} {...card} />
                 ))}
             </Grid2>
         </Grid2>
