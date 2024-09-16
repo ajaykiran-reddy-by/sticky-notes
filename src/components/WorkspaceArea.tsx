@@ -23,9 +23,9 @@ interface Card {
     cards: Card[];
   }
   
-const initialColumnsData = [
+export const initialColumnsData = [
     {
-      colName: 'To Do',
+      colName: 'sports',
       colId: 1,
       cards: [
         {
@@ -49,7 +49,7 @@ const initialColumnsData = [
       ],
     },
     {
-      colName: 'In Progress',
+      colName: 'personal',
       colId: 2,
       cards: [
         {
@@ -64,7 +64,7 @@ const initialColumnsData = [
       ],
     },
     {
-      colName: 'Done',
+      colName: 'work',
       colId: 3,
       cards: [
         {
@@ -84,11 +84,12 @@ const initialColumnsData = [
 const WorkspaceArea = () => {
         const [columns, setColumns] = useState<Column[]>([]);
 
-        useEffect(()=>{
-            let data = JSON.parse(localStorage.getItem('columnsData') || " ")
-            console.log("Data: ",data)
-            setColumns(data?.length ? data : initialColumnsData)
-        },[])
+        useEffect(() => {
+          let data: any = localStorage.getItem("columnsData") || "{}";
+          data = JSON.parse(data) || null;
+          console.log(data, "[]data");
+          setColumns(data.length ? data : initialColumnsData);
+        }, [])
 
         console.log(columns)
       

@@ -23,13 +23,15 @@ function App() {
 
   return (
     <React.Fragment>
-      <AppBar style={{ width: "100%", padding: "0.5rem" }} position="static">
+      <AppBar style={{
+    width: "100%",
+  }} position="static">
         <Grid2
           container
           style={{
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
+            width: "100%",
+            padding: "0.5rem",
+            background: "radial-gradient(circle, rgba(238,174,202,1) 0%, rgba(148,187,233,1) 100%)"
           }}
         >
           <Grid2 size={4}>
@@ -38,9 +40,21 @@ function App() {
             </Typography>
           </Grid2>
           <Grid2 size={8} style={{ textAlign: "end" }}>
-            <Button variant="outlined" color="secondary" onClick={handleOpenDialog}>
-              Add Todo
-            </Button>
+          <Button
+            variant="outlined"
+            sx={{
+              borderColor: '#003366', /* Border color */
+              color: '#003366',       /* Text color */
+              '&:hover': {
+                borderColor: '#001f3f', /* Darker border on hover */
+                backgroundColor: '#e6f0ff' /* Light background on hover */
+              }
+            }}
+            onClick={handleOpenDialog}
+          >
+            Add Note
+          </Button>
+
           </Grid2>
         </Grid2>
       </AppBar>
