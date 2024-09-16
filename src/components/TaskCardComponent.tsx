@@ -1,5 +1,5 @@
 import { Card, CardContent, Grid2, Typography } from '@mui/material';
-import React, { useState } from 'react';
+import { useState } from 'react';
 
 const TaskCardComponent = ({
   id,

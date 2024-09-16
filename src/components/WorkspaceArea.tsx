@@ -84,11 +84,12 @@ const initialColumnsData = [
 const WorkspaceArea = () => {
         const [columns, setColumns] = useState<Column[]>([]);
 
-        useEffect(()=>{
-            let data = JSON.parse(localStorage.getItem('columnsData') || " ")
-            console.log("Data: ",data)
-            setColumns(data?.length ? data : initialColumnsData)
-        },[])
+        useEffect(() => {
+            let data: any = localStorage.getItem("columnsData") || "{}";
+            data = JSON.parse(data) || null;
+            console.log(data, "[]data");
+            setColumns(data.length ? data : initialColumnsData);
+          }, []);
 
         console.log(columns)
       
@@ -103,10 +104,9 @@ const WorkspaceArea = () => {
           const handleDrop = (event: React.DragEvent, targetColumnId: number) => {
             event.preventDefault();
             
-            // Parse dataTransfer to get task id and origin column id
+    
             const { id, originColumnId } = JSON.parse(event.dataTransfer.getData('text/plain'));
           
-            // Find the task in the origin column
             const originColumn = columns.find(column => column.colId === originColumnId);
             const targetColumn = columns.find(column => column.colId === targetColumnId);
             
@@ -116,17 +116,15 @@ const WorkspaceArea = () => {
               if (taskIndex !== -1) {
                 const task = originColumn.cards[taskIndex];
           
-                // Create updated columns
+  
                 const newColumns = columns.map(column => {
                   if (column.colId === originColumnId) {
-                    // Remove task from origin column
                     return {
                       ...column,
                       cards: column.cards.filter((_, index) => index !== taskIndex)
                     };
                   }
                   if (column.colId === targetColumnId) {
-                    // Add task to target column
                     return {
                       ...column,
                       cards: [...column.cards, task]
@@ -135,7 +133,6 @@ const WorkspaceArea = () => {
                   return column;
                 });
           
-                // Update state with new columns
                 setColumns(newColumns);
               }
             }
