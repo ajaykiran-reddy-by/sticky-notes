@@ -25,12 +25,14 @@ const Transition = React.forwardRef(function Transition(
 
 export default function TodoCard({ open, onClose }: TodoCardProps) {
   const [formValues, setFormValues] = React.useState<{
+    id:number;
     taskName: string;
     description: string;
     footerAction: string;
     section: string;
     pickAvatar: string;
   }>({
+    id:0,//set logic
     taskName: '',
     description: '',
     footerAction: '',
@@ -40,7 +42,7 @@ export default function TodoCard({ open, onClose }: TodoCardProps) {
 
   
   const [cards, setCards] = React.useState<
-    { taskName: string; description: string; footerAction: string; section: string; pickAvatar: string }[]
+    { id:number, taskName: string; description: string; footerAction: string; section: string; pickAvatar: string }[]
   >([]);
 
   
@@ -55,7 +57,7 @@ export default function TodoCard({ open, onClose }: TodoCardProps) {
   
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    
+
     if (!formValues.taskName.trim()) {
       console.error('Task Name is required');
       return;
@@ -70,6 +72,7 @@ export default function TodoCard({ open, onClose }: TodoCardProps) {
     setCards([...cards, { ...formValues }]);
 
     setFormValues({
+      id:0,//check
       taskName: '',
       description: '',
       footerAction: '',
@@ -195,7 +198,7 @@ export default function TodoCard({ open, onClose }: TodoCardProps) {
             fullWidth
             placeholder='Pick Avatar'
             >
-              <MenuItem value="Section 1">Section 1</MenuItem>
+              <MenuItem value="Section">Section 1</MenuItem>
             </Select>
             </FormControl>
             
@@ -207,7 +210,7 @@ export default function TodoCard({ open, onClose }: TodoCardProps) {
       </Dialog>
 
       {/* Render To-Do Cards */}
-      <div style={{ display: 'flex', flexWrap: 'wrap', gap: '16px', marginTop: '16px' }}>
+      {/* <div style={{ display: 'flex', flexWrap: 'wrap', gap: '16px', marginTop: '16px' }}>
         {cards.map((card, index) => (
           <Card
             key={index}
@@ -226,7 +229,7 @@ export default function TodoCard({ open, onClose }: TodoCardProps) {
             </CardContent>
           </Card>
         ))}
-      </div>
+      </div> */}
     </div>
   );
 }
