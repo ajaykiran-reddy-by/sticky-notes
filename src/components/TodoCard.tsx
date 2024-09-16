@@ -77,4 +77,3 @@ export default function TodoCard({ open, onClose }: TodoCardProps) {
     </Dialog>
   );
 }
-console.log('HI')

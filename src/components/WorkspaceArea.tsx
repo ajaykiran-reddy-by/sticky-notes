@@ -82,17 +82,19 @@ const initialColumnsData = [
 
 
 const WorkspaceArea = () => {
+        const [columns, setColumns] = useState<Column[]>([]);
 
-        const [columns, setColumns] = useState<Column[]>(() => {
-          const savedColumns = localStorage.getItem('columnsData');
-          return savedColumns ? JSON.parse(savedColumns) : initialColumnsData;
-        });
+        useEffect(()=>{
+            let data = JSON.parse(localStorage.getItem('columnsData') || " ")
+            console.log("Data: ",data)
+            setColumns(data?.length ? data : initialColumnsData)
+        },[])
+
+        console.log(columns)
       
         useEffect(() => {
           localStorage.setItem('columnsData', JSON.stringify(columns));
         }, [columns]);
-
-        setColumns(initialColumnsData)
 
         const handleDragOver = (event: React.DragEvent) => {
             event.preventDefault(); 
@@ -143,6 +145,7 @@ const WorkspaceArea = () => {
     return (<Grid2 container rowSpacing={1} width={'100vw'}>
         {columns.map((column) => (
           <ColumnComponent
+            key={column.colId}
             colId={column.colId}
             colName={column.colName}
             cards={column.cards}
