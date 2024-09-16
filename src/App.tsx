@@ -7,6 +7,9 @@ import {
 } from "@mui/material";
 import TodoCard from "./components/TodoCard";
 
+import { WidthFull } from '@mui/icons-material';
+import WorkspaceArea from './components/WorkspaceArea';
+
 function App() {
   const [openDialog, setOpenDialog] = useState(false);  
 
@@ -41,6 +44,9 @@ function App() {
           </Grid2>
         </Grid2>
       </AppBar>
+      <Grid2 container width={'100%'} bgcolor={'#FFFFFF'} height={'100vh'}>
+          <WorkspaceArea/>
+      </Grid2>
       <TodoCard open={openDialog} onClose={handleCloseDialog} />   
     </React.Fragment>
   );
