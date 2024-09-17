@@ -1,24 +1,19 @@
-import React, { useState } from 'react';   
-import {
-  AppBar,
-  Button,
-  Grid2,
-  Typography,
-} from "@mui/material";
+import React, { useState } from "react";
+import { AppBar, Button, Grid2, Typography } from "@mui/material";
 import TodoCard from "./components/TodoCard";
 
-import { WidthFull } from '@mui/icons-material';
-import WorkspaceArea from './components/WorkspaceArea';
+import { WidthFull } from "@mui/icons-material";
+import WorkspaceArea from "./components/WorkspaceArea";
 
 function App() {
-  const [openDialog, setOpenDialog] = useState(false);  
+  const [openDialog, setOpenDialog] = useState(false);
 
   const handleOpenDialog = () => {
-    setOpenDialog(true);   
+    setOpenDialog(true);
   };
 
   const handleCloseDialog = () => {
-    setOpenDialog(false);  
+    setOpenDialog(false);
   };
 
   return (
@@ -36,7 +31,7 @@ function App() {
         >
           <Grid2 size={4}>
             <Typography variant="h6" color="inherit" component="div">
-              Team A  
+              Team A
             </Typography>
           </Grid2>
           <Grid2 size={8} style={{ textAlign: "end" }}>
@@ -58,10 +53,10 @@ function App() {
           </Grid2>
         </Grid2>
       </AppBar>
-      <Grid2 container width={'100%'} bgcolor={'#FFFFFF'} height={'100vh'}>
-          <WorkspaceArea/>
+      <Grid2 container width={"100%"} bgcolor={"#FFFFFF"} height={"100vh"}>
+        <WorkspaceArea />
       </Grid2>
-      <TodoCard open={openDialog} onClose={handleCloseDialog} />   
+      <TodoCard open={openDialog} onClose={handleCloseDialog} />
     </React.Fragment>
   );
 }
