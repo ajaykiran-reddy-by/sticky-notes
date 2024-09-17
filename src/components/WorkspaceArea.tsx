@@ -3,6 +3,7 @@ import ColumnContainer from "./ColumnContainer";
 import { useEffect, useState } from "react";
 import { initialColumnsData } from "../constants/constants";
 import { Section } from "../types/type";
+import { motion } from "framer-motion";
 
 interface Props {
   openDialog: boolean;
@@ -115,23 +116,27 @@ const WorkspaceArea = ({ openDialog }: Props) => {
     setDraggedCardId(null);
   };
 
-  console.log(columns, "columns");
-
   return (
     <Grid2 container spacing={3}>
-      {columns.map((column) => (
+      {columns.map((column, index) => (
         <Grid2 size={{ xs: 12, md: 4 }}>
-          <ColumnContainer
-            key={column.sectionId}
-            sectionId={column.sectionId}
-            sectionName={column.sectionName}
-            cards={column.cards}
-            handleDragOver={handleDragOver}
-            handleDrop={handleDrop}
-            handleDragStart={handleDragStart}
-            handleDragEnd={handleDragEnd}
-            sectionColor={column.sectionColor}
-          />
+          <motion.div
+            whileInView={{ opacity: 1, y: 0 }}
+            initial={{ opacity: 0, y: -100 }}
+            transition={{ duration: 1, delay: 0.5 + index }}
+          >
+            <ColumnContainer
+              key={column.sectionId}
+              sectionId={column.sectionId}
+              sectionName={column.sectionName}
+              cards={column.cards}
+              handleDragOver={handleDragOver}
+              handleDrop={handleDrop}
+              handleDragStart={handleDragStart}
+              handleDragEnd={handleDragEnd}
+              sectionColor={column.sectionColor}
+            />
+          </motion.div>
         </Grid2>
       ))}
     </Grid2>
