@@ -9,11 +9,14 @@ import { TransitionProps } from '@mui/material/transitions';
 import { IconButton, TextField, MenuItem, Select, InputLabel, FormControl } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
 import { AvatarLookups, sectionLookups } from '../constants/constants';
-import Card, { initialColumnsData } from './WorkspaceArea';
+import Column from './WorkspaceArea';
 interface TodoCardProps {
   open: boolean;
   onClose: () => void;
+  columns: typeof Column[];
+  setColumns: React.Dispatch<React.SetStateAction<typeof Column[]>>;
 }
+
 
 const Transition = React.forwardRef(function Transition(
   props: TransitionProps & {
@@ -24,8 +27,9 @@ const Transition = React.forwardRef(function Transition(
   return <Slide direction="up" ref={ref} {...props} />;
 });
 
-export default function TodoCard({ open, onClose }: TodoCardProps) {
+export default function TodoCard({ open, onClose, columns, setColumns }: TodoCardProps) {
   const [formValues, setFormValues] = React.useState<{
+    colId:number,
     id: number;
     taskName: string;
     description: string;
@@ -33,7 +37,8 @@ export default function TodoCard({ open, onClose }: TodoCardProps) {
     section: string;
     pickAvatar: string;
   }>({
-    id: 0, // ID will be set on submit
+    colId: 0,//initializing it, not mapped yet
+    id: 0,
     taskName: '',
     description: '',
     footerAction: '',
@@ -46,113 +51,53 @@ export default function TodoCard({ open, onClose }: TodoCardProps) {
     const { name, value } = e.target;
     setFormValues((prevValues) => ({
       ...prevValues,
-      [name!]: value,
+      [name]: value,
     }));
   };
 
-  // const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-  //   // {
-  //   //   colName: 'To Do',
-  //   //   colId: 1,
-  //   //   cards: [
-  //   //     {
-  //   //       id: 1,
-  //   //       title: 'Task 1',
-  //   //       content: 'This is task 1 content.',
-  //   //       icon: '📝',
-  //   //       dateTime: new Date(),
-  //   //       color: '#4285f4',
-  //   //       section: 1,
-  //   // //     },
-  //   //     {
-  //   //       id: 2,
-  //   //       title: 'Task 2',
-  //   //       content: 'This is task 2 content.',
-  //   //       icon: '📅',
-  //   //       dateTime: new Date(),
-  //   //       color: '#4285f4',
-  //   //       section: 1,
-  //   //     },
-  //   //   ],
-  //   // },
-
-  //   const newCard: Card = {
-  //     id: Date.now(), // Using timestamp for a unique ID
-  //     title: formValues.taskName,
-  //     content: formValues.description,
-  //     icon: formValues.pickAvatar,
-  //     dateTime: new Date(),
-  //     color: '#4285f4', // Default color, can be modified based on the section
-  //     section: parseInt(formValues.section, 10),
-  // };
-
-  //   setFormValues({
-  //     id: 0,
-  //     taskName: '',
-  //     description: '',
-  //     footerAction: '',
-  //     section: '',
-  //     pickAvatar: '',
-  //   });
-
-
-  //   onClose();
-  // };
-
-
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
+    event.preventDefault(); // Prevent default form submission
 
-    // Extract values from form state
-    const { taskName, description, pickAvatar, section } = formValues;
+    const { colId, taskName, description, section, pickAvatar } = formValues;
 
-    if (!taskName || !description) {
-        // Optionally handle validation errors here
-        return;
-    }
-
-    // Find the column to which the new card will be added
-    const columnToUpdate = initialColumnsData.find(column => column.colId === parseInt(section, 10));
-
-    if (!columnToUpdate) {
-        // Handle case where section is invalid or not found
-        return;
-    }
-
-    // Generate a new unique ID based on existing cards
-    const newId = columnToUpdate.cards.length > 0 
-        ? Math.max(...columnToUpdate.cards.map(card => card.id)) + 1 
-        : 1;
-
-    // Create the new card
+    // Create the new card object
     const newCard = {
-        id: newId,
-        title: taskName,
-        content: description,
-        icon: pickAvatar, // Assuming this is an emoji or icon string
-        dateTime: new Date(),
-        color: '#4285f4', // You can customize this or pass it through form values
-        section: parseInt(section, 10),
+      id: Date.now(), // this id logic must be changed 
+      title: taskName,
+      content: description,
+      icon: pickAvatar,
+      dateTime: new Date(),
+      color: sections.find((sec) => sec.value === section)?.color,
+      section: colId,
     };
 
-    // Add the new card to the appropriate column's cards array
-    columnToUpdate.cards = [...columnToUpdate.cards, newCard];
-    console.log('newCard: ',newCard)
-
-    // Reset form values
-    setFormValues({
-        id: 0,
-        taskName: '',
-        description: '',
-        footerAction: '',
-        section: '',
-        pickAvatar: '',
+    // Update the columns with the new card
+    const updatedColumns = columns.map((column) => {
+      if (column.colId === colId) {
+        return {
+          ...column,
+          cards: [...column.cards, newCard],
+        };
+      }
+      return column;
     });
 
-    // Close the form/modal/dialog
-    onClose();
-};
+    // Update the state in the parent component (`WorkspaceArea.tsx`)
+    setColumns(updatedColumns);
 
+    // Clear the form values after submission
+    setFormValues({
+      colId: 0,
+      id: 0,
+      taskName: '',
+      description: '',
+      footerAction: '',
+      section: '',
+      pickAvatar: '',
+    });
+
+    onClose(); // Close the dialog
+  };
 
   
 console.log('formvalues: ',formValues)
@@ -214,7 +159,7 @@ console.log('formvalues: ',formValues)
               fullWidth
               variant="standard"
             />
-            <TextField
+            {/* <TextField
               onChange={handleChange}
               value={formValues.footerAction}
               margin="dense"
@@ -224,7 +169,7 @@ console.log('formvalues: ',formValues)
               type="text"
               fullWidth
               variant="standard"
-            />
+            /> */}
             <FormControl fullWidth margin="dense">
               <InputLabel id="section-label">Section</InputLabel>
               <Select

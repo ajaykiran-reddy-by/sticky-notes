@@ -7,7 +7,7 @@ import { useEffect, useState } from "react";
  * @returns
  */
 
-interface Card {
+export interface ToDoCard {
     id: number;
     title: string;
     content: string;
@@ -17,15 +17,15 @@ interface Card {
     section: number;
   }
 
-  interface Column {
+  export interface Column {
     colName: string;
     colId: number;
-    cards: Card[];
+    cards: ToDoCard[];
   }
   
 export const initialColumnsData = [
     {
-      colName: 'sports',
+      colName: 'personal',
       colId: 1,
       cards: [
         {
@@ -49,7 +49,7 @@ export const initialColumnsData = [
       ],
     },
     {
-      colName: 'personal',
+      colName: 'work',
       colId: 2,
       cards: [
         {
@@ -64,7 +64,7 @@ export const initialColumnsData = [
       ],
     },
     {
-      colName: 'work',
+      colName: 'cooking',
       colId: 3,
       cards: [
         {
@@ -76,6 +76,15 @@ export const initialColumnsData = [
           color: '#ea4335',
           section: 3,
         },
+        {
+          id:5,
+          title:"Task 5 demo nik",
+          content:'This is description',
+          icon:'',
+          dateTime:new Date(),
+          color:'#ea4335',
+          section:3,
+        }
       ],
     },
   ];
@@ -112,7 +121,7 @@ const WorkspaceArea = () => {
             const targetColumn = columns.find(column => column.colId === targetColumnId);
             
             if (originColumn && targetColumn) {
-              const taskIndex = originColumn.cards.findIndex((task: Card) => task.id === id);
+              const taskIndex = originColumn.cards.findIndex((task: ToDoCard) => task.id === id);
               
               if (taskIndex !== -1) {
                 const task = originColumn.cards[taskIndex];

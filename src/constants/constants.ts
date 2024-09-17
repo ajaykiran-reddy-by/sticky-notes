@@ -16,39 +16,40 @@ import sports3 from '../SVGs/sports3.svg'
 import travel1 from '../SVGs/travel1.svg'
 import travel2 from '../SVGs/travel2.svg'
 import travel3 from '../SVGs/travel3.svg'
+
 const sectionLookups=[
     {
-        id:1,
+        colId:1,
         name:'Personal',
         value:'personal',
         color:'#f5b042'
     },
     {
-        id:2,
+        colId:2,
         name:'Work',
         value:'work',
         color:'#42f593'
     },
     {
-        id:3,
+        colId:3,
         name:'Cooking',
         value:'cooking',
         color:'#3caaf0'
     },
     {
-        id:4,
+        colId:4,
         name:'Sports',
         value:'sports',
         color:'#a55beb'
     },
     {
-        id:5,
+        colId:5,
         name:'Travel',
         value:'travel',
         color:'#e858c2'
     },
     {
-        id:6,
+        colId:6,
         name:'Finance',
         value:'finance',
         color:'#e8e658'
