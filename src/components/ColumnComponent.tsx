@@ -1,5 +1,6 @@
 import { Grid2, Typography } from "@mui/material";
 import TaskCardComponent from "./TaskCardComponent";
+import { useRef } from "react";
 
 const ColumnComponent = ({
   colId,
@@ -26,10 +27,14 @@ const ColumnComponent = ({
   handleDragStart: Function;
   handleDragEnd: Function;
 }) => {
+
+  const containerRef = useRef<HTMLDivElement | null>(null);
+
   return (
     <Grid2 size={6}>
       <Grid2
         container
+        ref={containerRef}
         direction={"column"}
         width={"100%"}
         minHeight={'50vh'}
@@ -45,6 +50,7 @@ const ColumnComponent = ({
         <Grid2 container justifyContent={"center"} spacing={2}>
           {cards.map((card) => (
             <TaskCardComponent
+              containerRef={containerRef}
               handleDragStart={handleDragStart}
               handleDragEnd={handleDragEnd}
               key={card.id}
