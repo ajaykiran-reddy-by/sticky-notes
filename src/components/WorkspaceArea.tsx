@@ -157,72 +157,8 @@ const WorkspaceArea = () => {
     e.dataTransfer.dropEffect = "move";
   };
 
-  // const handleDrop = (e: any, targetColId: number) => {
-  //   console.log("inside handle drop");
-  //   e.preventDefault();
-  //   e.dataTransfer.dropEffect = "move";
-  
-  //   if (draggedCardId) {
-  //     const sourceColIndex = columns.findIndex((col) =>
-  //       col.cards.some((card) => card.id === draggedCardId)
-  //     );
-  //     const targetColIndex = columns.findIndex((col) => col.colId === targetColId);
-  
-  //     if (sourceColIndex !== -1 && targetColIndex !== -1) {     //handle index not found and dropping in the same column  
-  //       const cardToMove = columns[sourceColIndex].cards.find(
-  //         (card) => card.id === draggedCardId
-  //       );
-  
-  //       if (!cardToMove) return;
-
-  //       if (sourceColIndex === targetColIndex) {
-  //         const cardIndex = columns[sourceColIndex].cards.findIndex(
-  //           (card) => card.id === draggedCardId
-  //         );
-
-  //         const targetIndex = 1;   //fetch target index and replace
-          
-  //         const reorderedCards = [...columns[sourceColIndex].cards];
-  //         reorderedCards.splice(cardIndex, 1); 
-  //         reorderedCards.splice(targetIndex, 0, cardToMove); 
-  
-  //         const updatedColumn = {
-  //           ...columns[sourceColIndex],
-  //           cards: reorderedCards,
-  //         };
-  
-  //         const updatedColumns = [...columns];
-  //         updatedColumns[sourceColIndex] = updatedColumn;
-  
-  //         setColumns(updatedColumns);
-  //       } else {  //handle moving cards to different columns
-   
-  //         const updatedSourceCol = {
-  //           ...columns[sourceColIndex],
-  //           cards: columns[sourceColIndex].cards.filter(
-  //             (card) => card.id !== draggedCardId
-  //           ),
-  //         };
-  
-  //         const updatedTargetCol = {
-  //           ...columns[targetColIndex],
-  //           cards: [...columns[targetColIndex].cards, cardToMove],
-  //         };
-  
-  //         const updatedColumns = [...columns];
-  //         updatedColumns[sourceColIndex] = updatedSourceCol;
-  //         updatedColumns[targetColIndex] = updatedTargetCol;
-  
-  //         setColumns(updatedColumns);
-  //         // localStorage.setItem("columnsData", JSON.stringify(updatedColumns));
-  //       }
-  //     }
-  //   }
-  
-  //   setDraggedCardId(null);
-  // };
-  
   const handleDrop = (e: any, targetColId: number) => {
+    console.log("inside handle drop");
     e.preventDefault();
     e.dataTransfer.dropEffect = "move";
   
@@ -232,45 +168,23 @@ const WorkspaceArea = () => {
       );
       const targetColIndex = columns.findIndex((col) => col.colId === targetColId);
   
-      if (sourceColIndex !== -1 && targetColIndex !== -1) {
+      if (sourceColIndex !== -1 && targetColIndex !== -1) {     //handle index not found and dropping in the same column  
         const cardToMove = columns[sourceColIndex].cards.find(
           (card) => card.id === draggedCardId
         );
   
         if (!cardToMove) return;
-  
+
         if (sourceColIndex === targetColIndex) {
-          // Target column DOM element and cards
-          const columnElement = document.getElementById(`column-${targetColId}`);
-          const cardElements = columnElement?.getElementsByClassName("card");
-  
-          let targetIndex = columns[sourceColIndex].cards.length; // Default to last position
-  
-          if (cardElements && cardElements.length > 0) {
-            for (let i = 0; i < cardElements.length; i++) {
-              const cardElement = cardElements[i] as HTMLElement;
-              const rect = cardElement.getBoundingClientRect();
-  
-              // Logging for debugging
-              console.log(`Card ${i} bounds:`, rect);
-              console.log(`Mouse Y: ${e.clientY}`);
-  
-              // Check if mouse is above the current card's top boundary
-              if (e.clientY < rect.top) {
-                targetIndex = i;
-                break;  // Once we find the correct position, we can break out
-              }
-            }
-          }
-  
-          // Find index of the dragged card
           const cardIndex = columns[sourceColIndex].cards.findIndex(
             (card) => card.id === draggedCardId
           );
-  
+
+          const targetIndex = 1;   //fetch target index and replace
+          
           const reorderedCards = [...columns[sourceColIndex].cards];
-          reorderedCards.splice(cardIndex, 1); // Remove the dragged card
-          reorderedCards.splice(targetIndex, 0, cardToMove); // Insert at the new index
+          reorderedCards.splice(cardIndex, 1); 
+          reorderedCards.splice(targetIndex, 0, cardToMove); 
   
           const updatedColumn = {
             ...columns[sourceColIndex],
@@ -281,8 +195,8 @@ const WorkspaceArea = () => {
           updatedColumns[sourceColIndex] = updatedColumn;
   
           setColumns(updatedColumns);
-        } else {
-          // Moving card to a different column
+        } else {  //handle moving cards to different columns
+   
           const updatedSourceCol = {
             ...columns[sourceColIndex],
             cards: columns[sourceColIndex].cards.filter(
@@ -300,14 +214,13 @@ const WorkspaceArea = () => {
           updatedColumns[targetColIndex] = updatedTargetCol;
   
           setColumns(updatedColumns);
+          // localStorage.setItem("columnsData", JSON.stringify(updatedColumns));
         }
       }
     }
   
     setDraggedCardId(null);
   };
-  
-  
   
 
 

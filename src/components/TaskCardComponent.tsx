@@ -21,7 +21,6 @@ const TaskCardComponent = ({
   handleDragEnd: Function;
 }) => {
   const [isDragging, setIsDragging] = useState(false);
-  console.log(dateTime, "[date time]");
 
   return (
     <Grid2 size={{ xs: 12, md: 6 }}>
