@@ -6,13 +6,17 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
 import Slide from '@mui/material/Slide';
 import { TransitionProps } from '@mui/material/transitions';
-import { IconButton, TextField, Card, CardContent, Typography, MenuItem, Select, InputLabel, FormControl } from '@mui/material';
+import { IconButton, TextField, MenuItem, Select, InputLabel, FormControl } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
-
+import { AvatarLookups, sectionLookups } from '../constants/constants';
+import Column from './WorkspaceArea';
 interface TodoCardProps {
   open: boolean;
   onClose: () => void;
+  columns: typeof Column[];
+  setColumns: React.Dispatch<React.SetStateAction<typeof Column[]>>;
 }
+
 
 const Transition = React.forwardRef(function Transition(
   props: TransitionProps & {
@@ -23,56 +27,68 @@ const Transition = React.forwardRef(function Transition(
   return <Slide direction="up" ref={ref} {...props} />;
 });
 
-export default function TodoCard({ open, onClose }: TodoCardProps) {
+export default function TodoCard({ open, onClose, columns, setColumns }: TodoCardProps) {
   const [formValues, setFormValues] = React.useState<{
-    id:number;
+    colId:number,
+    id: number;
     taskName: string;
     description: string;
     footerAction: string;
     section: string;
     pickAvatar: string;
   }>({
-    id:0,//set logic
+    colId: 0,//initializing it, not mapped yet
+    id: 0,
     taskName: '',
     description: '',
     footerAction: '',
     section: '',
     pickAvatar: '',
   });
+  const sections=sectionLookups;
 
-  
-  const [cards, setCards] = React.useState<
-    { id:number, taskName: string; description: string; footerAction: string; section: string; pickAvatar: string }[]
-  >([]);
-
-  
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | { name?: string; value: unknown }>) => {
+  const handleChange = (e:any) => {
     const { name, value } = e.target;
     setFormValues((prevValues) => ({
       ...prevValues,
-      [name!]: value,
+      [name]: value,
     }));
   };
 
-  
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
+    event.preventDefault(); // Prevent default form submission
 
-    if (!formValues.taskName.trim()) {
-      console.error('Task Name is required');
-      return;
-    }
-    
-    if (!formValues.description.trim()) {
-      console.error('Description is required');
-      return;
-    }
+    const { colId, taskName, description, section, pickAvatar } = formValues;
 
-    
-    setCards([...cards, { ...formValues }]);
+    // Create the new card object
+    const newCard = {
+      id: Date.now(), // this id logic must be changed 
+      title: taskName,
+      content: description,
+      icon: pickAvatar,
+      dateTime: new Date(),
+      color: sections.find((sec) => sec.value === section)?.color,
+      section: colId,
+    };
 
+    // Update the columns with the new card
+    const updatedColumns = columns.map((column) => {
+      if (column.colId === colId) {
+        return {
+          ...column,
+          cards: [...column.cards, newCard],
+        };
+      }
+      return column;
+    });
+
+    // Update the state in the parent component (`WorkspaceArea.tsx`)
+    setColumns(updatedColumns);
+
+    // Clear the form values after submission
     setFormValues({
-      id:0,//check
+      colId: 0,
+      id: 0,
       taskName: '',
       description: '',
       footerAction: '',
@@ -80,12 +96,13 @@ export default function TodoCard({ open, onClose }: TodoCardProps) {
       pickAvatar: '',
     });
 
-    onClose();
+    onClose(); // Close the dialog
   };
 
+  
+console.log('formvalues: ',formValues)
   return (
     <div>
-      {/* To-Do Card Creation Dialog */}
       <Dialog
         open={open}
         TransitionComponent={Transition}
@@ -95,20 +112,13 @@ export default function TodoCard({ open, onClose }: TodoCardProps) {
         maxWidth="xs"
         PaperProps={{
           component: 'form',
-          onSubmit: handleSubmit,
-          // sx: {
-          //   display: 'flex',
-          //   justifyContent: 'center',
-          //   alignItems: 'center',
-          //   minWidth: 'xs', // Applies the minimum width to the dialog
-          //   p: 2, // Optional padding for better spacing inside the dialog
-          // },
+          onSubmit: {handleSubmit},
           sx: {
             width: '90%',
-            minWidth:'300px',
+            minWidth: '300px',
             maxWidth: '400px',
-            padding: 2, 
-            alignItems: 'center', 
+            padding: 2,
+            alignItems: 'center',
           },
         }}
       >
@@ -149,10 +159,9 @@ export default function TodoCard({ open, onClose }: TodoCardProps) {
               fullWidth
               variant="standard"
             />
-            <TextField
+            {/* <TextField
               onChange={handleChange}
               value={formValues.footerAction}
-              required
               margin="dense"
               id="footer-action"
               name="footerAction"
@@ -160,14 +169,7 @@ export default function TodoCard({ open, onClose }: TodoCardProps) {
               type="text"
               fullWidth
               variant="standard"
-              // slotProps={{
-              //   inputLabel: {
-              //     sx: {
-              //       paddingLeft: '15px', 
-              //     },
-              //   },
-              // }}
-            />
+            /> */}
             <FormControl fullWidth margin="dense">
               <InputLabel id="section-label">Section</InputLabel>
               <Select
@@ -177,59 +179,41 @@ export default function TodoCard({ open, onClose }: TodoCardProps) {
                 value={formValues.section}
                 onChange={handleChange}
                 variant="standard"
-                // MenuProps={}
+                required
               >
-                <MenuItem value="Section 1">Section 1</MenuItem>
-                <MenuItem value="Section 2">Section 2</MenuItem>
-                <MenuItem value="Section 3">Section 3</MenuItem>
-                <MenuItem value="Section 4">Section 4</MenuItem>
-                <MenuItem value="Section 5">Section 5</MenuItem>
+                {sections.map((section)=>{
+                  return <MenuItem key={section.name} value={section.value}>{section.name}</MenuItem>
+                })}
               </Select>
             </FormControl>
             <FormControl fullWidth margin="dense">
               <InputLabel id="Avatar-label">Pick Avatar</InputLabel>
               <Select
-            labelId="Avatar-label"
-            id="pick-avatar"
-            name="Pick Avatar"
-            value={formValues.pickAvatar}
-            onChange={handleChange}
-            variant="standard"
-            fullWidth
-            placeholder='Pick Avatar'
-            >
-              <MenuItem value="Section">Section 1</MenuItem>
-            </Select>
+                labelId="Avatar-label"
+                id="pick-avatar"
+                name="pickAvatar"
+                value={formValues.pickAvatar} 
+                onChange={handleChange}
+                variant="standard"
+                fullWidth
+              >
+                {AvatarLookups.filter(ele=>ele.category===formValues.section).map((avatar) => (
+                <MenuItem key={avatar.name} value={avatar.name}>
+                  <img 
+                    src={avatar.img} 
+                    style={{ width: 24, height: 24, marginRight: 8 }} 
+                  />
+                  {avatar.name}
+                </MenuItem>
+              ))}
+              </Select>
             </FormControl>
-            
           </>
         </DialogContent>
         <DialogActions>
           <Button type="submit">Submit</Button>
         </DialogActions>
       </Dialog>
-
-      {/* Render To-Do Cards */}
-      {/* <div style={{ display: 'flex', flexWrap: 'wrap', gap: '16px', marginTop: '16px' }}>
-        {cards.map((card, index) => (
-          <Card
-            key={index}
-            sx={{
-              width: 250,
-              background: 'linear-gradient(135deg, #f6d365 0%, #fda085 100%)',
-              color: '#fff',
-            }}
-          >
-            <CardContent>
-              <Typography variant="h6" component="div">
-                {card.taskName}
-              </Typography>
-              <Typography variant="body2">Description: {card.description}</Typography>
-              <Typography variant="body2">Avatar: {card.pickAvatar}</Typography>
-            </CardContent>
-          </Card>
-        ))}
-      </div> */}
     </div>
   );
 }
