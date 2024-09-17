@@ -1,33 +1,20 @@
 import { Grid2, Typography } from "@mui/material";
-import TaskCardComponent from "./TaskCardComponent";
+import TaskCard from "./TaskCard";
 import { useRef } from "react";
+import { Section } from "../types/type";
 
-const ColumnComponent = ({
-  colId,
-  colName,
-  cards,
-  handleDragOver,
-  handleDrop,
-  handleDragStart,
-  handleDragEnd,
-}: {
-  colId: number;
-  colName: string;
-  cards: {
-    id: number;
-    title: string;
-    content: string;
-    icon: string;
-    dateTime: Date;
-    color: string;
-    section: number;
-  }[];
-  handleDragOver: Function;
-  handleDrop: Function;
-  handleDragStart: Function;
-  handleDragEnd: Function;
-}) => {
-
+const ColumnContainer = (props: Section) => {
+  const {
+    cards,
+    handleDragEnd,
+    handleDragOver,
+    handleDragStart,
+    handleDrop,
+    sectionColor,
+    sectionId,
+    sectionName,
+  } = props;
+  console.log(sectionColor, "[section color]");
   const containerRef = useRef<HTMLDivElement | null>(null);
 
   return (
@@ -37,23 +24,24 @@ const ColumnComponent = ({
         ref={containerRef}
         direction={"column"}
         width={"100%"}
-        minHeight={'50vh'}
+        minHeight={"50vh"}
         border={"1px solid black"}
         onDragOver={(e) => handleDragOver(e)}
-        onDrop={(e: any) => handleDrop(e, colId)}
+        onDrop={(e: any) => handleDrop(e, sectionId)}
       >
         <Grid2>
           <Typography variant="h5" align="left" color="primary">
-            {colName}
+            {sectionName}
           </Typography>
         </Grid2>
         <Grid2 container justifyContent={"center"} spacing={2}>
           {cards.map((card) => (
-            <TaskCardComponent
-              containerRef={containerRef}
+            <TaskCard
+              // containerRef={containerRef}
               handleDragStart={handleDragStart}
               handleDragEnd={handleDragEnd}
               key={card.id}
+              color={sectionColor}
               {...card}
             />
           ))}
@@ -63,4 +51,4 @@ const ColumnComponent = ({
   );
 };
 
-export default ColumnComponent;
+export default ColumnContainer;
