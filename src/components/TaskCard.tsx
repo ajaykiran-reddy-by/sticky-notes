@@ -1,6 +1,11 @@
 import { Card, CardContent, Grid2, Typography } from "@mui/material";
 import { useState } from "react";
 import { motion } from "framer-motion";
+import EditIcon from '@mui/icons-material/Edit';
+
+const handleEditCard:any =()=>{
+//yet to code
+}
 
 const TaskCard = ({
   id,
@@ -24,7 +29,8 @@ const TaskCard = ({
   handleDragEnd: Function;
 }) => {
   const [isDragging, setIsDragging] = useState(false);
-
+  const [isHovering, setIsHovering] = useState(false);
+  
   return (
     <Card
       draggable
@@ -44,7 +50,10 @@ const TaskCard = ({
         backgroundColor: "#fff",
         maxWidth: "80%",
       }}
+      onMouseEnter={()=>setIsHovering(true)}
+      onMouseLeave={()=>setIsHovering(false)}
     >
+      
       <CardContent sx={{ flexGrow: 1, padding: "16px" }}>
         <Typography variant="h6" sx={{ fontWeight: "bold" }}>
           <Grid2 container>
@@ -99,6 +108,17 @@ const TaskCard = ({
           borderBottom: "0.5px solid black",
         }}
       />
+      { isHovering && <EditIcon 
+        style={{
+          position: "absolute",
+          top: "80px", 
+          right: "1px", 
+          zIndex: 1,
+          cursor: "pointer" 
+        }}
+        onClick={handleEditCard}
+      />}
+      
     </Card>
   );
 };
