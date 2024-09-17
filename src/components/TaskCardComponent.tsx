@@ -59,10 +59,10 @@ const TaskCardComponent = ({
             }}
           >
             <Typography variant="caption" color="primary">
-              {dateTime.toString()}
+              {new Date(dateTime).toLocaleDateString("en-GB")}
             </Typography>
             <Typography variant="caption" color="primary">
-              {dateTime.toString()}
+              {new Date(dateTime).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })}
             </Typography>
           </div>
         </CardContent>

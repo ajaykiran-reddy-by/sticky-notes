@@ -32,6 +32,7 @@ const ColumnComponent = ({
         container
         direction={"column"}
         width={"100%"}
+        minHeight={'50vh'}
         border={"1px solid black"}
         onDragOver={(e) => handleDragOver(e)}
         onDrop={(e: any) => handleDrop(e, colId)}
