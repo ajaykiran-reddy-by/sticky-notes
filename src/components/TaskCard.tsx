@@ -48,16 +48,20 @@ const TaskCard = ({
       >
         <CardContent sx={{ flexGrow: 1, padding: "16px" }}>
           <Typography variant="h6" sx={{ fontWeight: "bold" }}>
-            <img
-              src={avatar}
-              alt={title}
-              style={{
-                height: "30px",
-                width: "30px",
-                paddingRight: "0.2rem",
-              }}
-            />
-            {title}
+            <Grid2 container>
+              <Grid2>
+                <img
+                  src={avatar}
+                  alt={title}
+                  style={{
+                    height: "30px",
+                    width: "30px",
+                    paddingRight: "0.2rem",
+                  }}
+                />
+              </Grid2>
+              <Grid2>{title}</Grid2>
+            </Grid2>
           </Typography>
           <Typography variant="body2" sx={{ marginBottom: "8px" }}>
             {content}
