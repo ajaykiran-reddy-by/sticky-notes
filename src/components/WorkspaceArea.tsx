@@ -1,5 +1,5 @@
 import { Grid2 } from "@mui/material";
-import ColumnComponent from "./ColumnContainer";
+import ColumnContainer from "./ColumnContainer";
 import { useEffect, useState } from "react";
 import { initialColumnsData } from "../constants/constants";
 import { Section } from "../types/type";
@@ -118,19 +118,21 @@ const WorkspaceArea = ({ openDialog }: Props) => {
   console.log(columns, "columns");
 
   return (
-    <Grid2 container rowSpacing={1} width={"100vw"}>
+    <Grid2 container spacing={3}>
       {columns.map((column) => (
-        <ColumnComponent
-          key={column.sectionId}
-          sectionId={column.sectionId}
-          sectionName={column.sectionName}
-          cards={column.cards}
-          handleDragOver={handleDragOver}
-          handleDrop={handleDrop}
-          handleDragStart={handleDragStart}
-          handleDragEnd={handleDragEnd}
-          sectionColor={column.sectionColor}
-        />
+        <Grid2 size={{ xs: 12, md: 4 }}>
+          <ColumnContainer
+            key={column.sectionId}
+            sectionId={column.sectionId}
+            sectionName={column.sectionName}
+            cards={column.cards}
+            handleDragOver={handleDragOver}
+            handleDrop={handleDrop}
+            handleDragStart={handleDragStart}
+            handleDragEnd={handleDragEnd}
+            sectionColor={column.sectionColor}
+          />
+        </Grid2>
       ))}
     </Grid2>
   );
