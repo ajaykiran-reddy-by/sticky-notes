@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { AppBar, Button, Grid2, Typography } from "@mui/material";
+import { AppBar, Box, Button, Grid2, Typography } from "@mui/material";
 import TodoCard from "./components/ConfigureTodo";
 import WorkspaceArea from "./components/WorkspaceArea";
 
@@ -54,10 +54,10 @@ function App() {
           </Grid2>
         </Grid2>
       </AppBar>
-      <Grid2 container width={"100%"} bgcolor={"#FFFFFF"} height={"100vh"}>
+      <Box mt={2} pl={3} pr={3}>
         <WorkspaceArea openDialog={openDialog} />
-      </Grid2>
-      <TodoCard open={openDialog} onClose={handleCloseDialog} />
+      </Box>
+      <TodoCard open={openDialog} onClose={handleCloseDialog} isEditMode={false}/>
     </React.Fragment>
   );
 }
