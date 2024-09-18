@@ -3,10 +3,10 @@ interface Section {
   sectionId: number;
   sectionColor: string;
   cards: Card[];
-  handleDragOver?: Function;
-  handleDrop?: Function;
-  handleDragStart?: Function;
-  handleDragEnd?: Function;
+  handleDragOver: Function;
+  handleDrop: Function;
+  handleDragStart: Function;
+  handleDragEnd: Function;
 }
 
 interface Card {
