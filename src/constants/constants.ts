@@ -157,24 +157,24 @@ const initialColumnsData = [
     cards: [
       {
         id: new Date().getTime() + Math.random(),
-        title: "Task 1",
-        content: "This is task 1 content.",
+        title: "Groceries List",
+        content: "Eggs, milk",
         avatar: personal1,
         dateTime: new Date(),
         section: 1,
       },
       {
         id: new Date().getTime() + Math.random(),
-        title: "Task 2",
-        content: "This is task 2 content.",
+        title: "Reminder",
+        content: "Call John",
         avatar: personal2,
         dateTime: new Date(),
         section: 1,
       },
       {
         id: new Date().getTime() + Math.random(),
-        title: "Task 3",
-        content: "This is task 3 content.",
+        title: "Pending Tasks",
+        content: "",
         avatar: personal3,
         dateTime: new Date(),
         section: 1,
@@ -188,20 +188,28 @@ const initialColumnsData = [
     cards: [
       {
         id: new Date().getTime() + Math.random(),
-        title: "Task 4",
-        content: "This is task 4 content.",
+        title: "FootBall",
+        content: "tournament at 9pm today",
         avatar: sports1,
         dateTime: new Date(),
         section: 4,
       },
       {
         id: new Date().getTime() + Math.random(),
-        title: "Task 5",
-        content: "This is task 5 content.",
+        title: "Tennis",
+        content: "Buy Tennis racquet",
         avatar: sports2,
         dateTime: new Date(),
         section: 4,
       },
+      {
+        id: new Date().getTime() + Math.random(),
+        title: "Things to buy",
+        content: "Buy airpump for VolleyBall",
+        avatar: sports3,
+        dateTime: new Date(),
+        section: 4,
+      }
     ],
   },
   {
@@ -211,12 +219,105 @@ const initialColumnsData = [
     cards: [
       {
         id: new Date().getTime() + Math.random(),
-        title: "Task 6",
-        content: "This is task 6 content.",
+        title: "Biryani Recipie",
+        content: "Watch it in YT",
         avatar: cooking1,
         dateTime: new Date(),
         section: 3,
       },
+    ],
+  },
+  {
+    sectionName: "Work",
+    sectionId: 2,
+    sectionColor: "#a55beb",
+    cards: [
+      {
+        id: new Date().getTime() + Math.random(),
+        title: "Update Tempo",
+        content: "by the EOD",
+        avatar: office1,
+        dateTime: new Date(),
+        section: 2,
+      },
+      {
+        id: new Date().getTime() + Math.random(),
+        title: "UI tasks",
+        content: "Add/Edit Modes, Delete functionality",
+        avatar: office2,
+        dateTime: new Date(),
+        section: 2,
+      },
+      {
+        id: new Date().getTime() + Math.random(),
+        title: "Leave Req",
+        content: "Send a mail to Manager about leave req",
+        avatar: office3,
+        dateTime: new Date(),
+        section: 2,
+      }
+    ],
+  },
+  {
+    sectionName: "Travel",
+    sectionId: 5,
+    sectionColor: "#a55beb",
+    cards: [
+      {
+        id: new Date().getTime() + Math.random(),
+        title: "Places to visit",
+        content: "Vietnam, Thailand, Bali",
+        avatar: travel1,
+        dateTime: new Date(),
+        section: 5,
+      },
+      {
+        id: new Date().getTime() + Math.random(),
+        title: "Things to pack for Intertional Vacation",
+        content: "Passport, Aadhar Card",
+        avatar: travel2,
+        dateTime: new Date(),
+        section: 5,
+      },
+      {
+        id: new Date().getTime() + Math.random(),
+        title: "Essentials for roadtrip",
+        content: "Spare Tyre, Tools to change the tyre ",
+        avatar: travel3,
+        dateTime: new Date(),
+        section: 5,
+      }
+    ],
+  },
+  {
+    sectionName: "Finance",
+    sectionId: 6,
+    sectionColor: "#a55beb",
+    cards: [
+      {
+        id: new Date().getTime() + Math.random(),
+        title: "Manage Cashflow",
+        content: "Call CA and manage it!",
+        avatar: finance1,
+        dateTime: new Date(),
+        section: 6,
+      },
+      {
+        id: new Date().getTime() + Math.random(),
+        title: "Apply for IPO",
+        content: "Arkade Developers",
+        avatar: finance2,
+        dateTime: new Date(),
+        section: 6,
+      },
+      {
+        id: new Date().getTime() + Math.random(),
+        title: "Savings",
+        content: "2.5L",
+        avatar: finance3,
+        dateTime: new Date(),
+        section: 6,
+      }
     ],
   },
 ];
