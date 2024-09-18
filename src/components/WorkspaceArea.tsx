@@ -177,17 +177,16 @@ const WorkspaceArea = ({ openDialog, handleCloseCb, cbInd }: Props) => {
     }}
     onDragLeave={() => setOpenDelete(false)}
     style={{ 
-    backgroundColor: '#FF0000',
+    backgroundColor: openDelete ? '#EA4335' : '#FF0000',
     width: '25vw',
-    height: openDelete ? '15%' : '5%',
     border: '1px solid black',
-    position: 'absolute',
-    opacity: openDelete ? '100%' : '25%',
+    position: 'sticky',
+    opacity: openDelete ? '100%' : '20%',
     bottom: 0,
     borderRadius: '12px 12px 0px 0px',
     left: '50%',
     transform: 'translateX(-50%)', 
-    transition: 'height 0.3s ease',
+    transition: 'opacity 0.3s ease',
     display: 'flex',
     justifyContent: 'center',
     }}>
@@ -198,6 +197,7 @@ const WorkspaceArea = ({ openDialog, handleCloseCb, cbInd }: Props) => {
                   height: "25px",
                   width: "25px",
                   marginTop: "10px",
+                  paddingBottom: "10px",
                 }}  
               />
     </div>
