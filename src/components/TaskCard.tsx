@@ -142,7 +142,7 @@ const TaskCard = ({
               <EditIcon
                 style={{
                   position: "absolute",
-                  top: "80px",
+                  top: "40%",
                   right: "1px",
                   zIndex: 1,
                   cursor: "pointer",
