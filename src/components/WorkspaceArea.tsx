@@ -5,6 +5,8 @@ import { initialColumnsData } from "../constants/constants";
 import { Section } from "../types/type";
 import { motion } from "framer-motion";
 
+import deleteicon from '../SVGs/deleteicon.svg'
+
 interface Props {
   openDialog: boolean;
 }
@@ -183,7 +185,18 @@ const WorkspaceArea = ({ openDialog }: Props) => {
     left: '50%',
     transform: 'translateX(-50%)', 
     transition: 'height 0.3s ease',
+    display: 'flex',
+    justifyContent: 'center',
     }}>
+      <img
+                src={deleteicon}
+                alt={deleteicon}
+                style={{
+                  height: "25px",
+                  width: "25px",
+                  marginTop: "10px",
+                }}  
+              />
     </div>
     </>
   );
