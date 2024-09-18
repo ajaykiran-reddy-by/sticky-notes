@@ -13,11 +13,13 @@ import {
   Select,
   InputLabel,
   FormControl,
+  Box,
 } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 import { AvatarLookups, sectionLookups } from "../constants/constants";
 import { Section } from "../types/type";
 import { useEffect, useState } from "react";
+import { motion } from "framer-motion";
 
 interface TodoCardProps {
   open: boolean;
@@ -114,113 +116,133 @@ export default function TodoCard({
   };
 
   return (
-    <Dialog
-      open={open}
-      TransitionComponent={Transition}
-      keepMounted
-      onClose={onClose}
-      aria-describedby="alert-dialog-slide-description"
-      maxWidth="sm"
-      fullWidth
+    <motion.div
+      // animate={{
+      //   scale: [1, 2, 2, 1, 1],
+      //   rotate: [0, 0, 180, 180, 0],
+      //   borderRadius: ["0%", "0%", "50%", "50%", "0%"],
+      // }}
+      // transition={{
+      //   duration: 2,
+      //   ease: "easeInOut",
+      //   times: [0, 0.2, 0.5, 0.8, 1],
+      //   repeat: Infinity,
+      //   repeatDelay: 1,
+      // }}
+      whileInView={{ opacity: 1, y: 0 }}
+      initial={{ opacity: 0, y: -100 }}
+      // transition={{ duration: 1, delay: 0.5 + index }}
     >
-      <DialogTitle>
-        {isEditMode ? `Edit ${formValues.title}` : " Add Note"}
-
-        <IconButton
-          aria-label="close"
-          onClick={onClose}
-          sx={{ position: "absolute", right: 8, top: 8 }}
+      <Box>
+        <Dialog
+          open={open}
+          TransitionComponent={Transition}
+          keepMounted
+          onClose={onClose}
+          aria-describedby="alert-dialog-slide-description"
+          maxWidth="sm"
+          fullWidth
         >
-          <CloseIcon />
-        </IconButton>
-      </DialogTitle>
-      <DialogContent>
-        <>
-          <TextField
-            onChange={handleChange}
-            value={formValues.title}
-            autoFocus
-            required
-            margin="dense"
-            id="task-name"
-            name="title"
-            label="Task Name"
-            type="text"
-            fullWidth
-            variant="standard"
-            placeholder="Enter task name"
-          />
-          <TextField
-            onChange={handleChange}
-            value={formValues.content}
-            required
-            margin="dense"
-            id="description"
-            name="content"
-            label="Description"
-            type="text"
-            fullWidth
-            variant="standard"
-            placeholder="Enter task description"
-          />
-          <>
-            <InputLabel required>Section</InputLabel>
-            <Select
-              labelId="section-label"
-              id="section"
-              name="section"
-              value={formValues.section}
-              variant="standard"
-              fullWidth
+          <DialogTitle>
+            {isEditMode ? `Edit ${formValues.title}` : " Add Note"}
+
+            <IconButton
+              aria-label="close"
+              onClick={onClose}
+              sx={{ position: "absolute", right: 8, top: 8 }}
             >
-              {sections.map((section) => {
-                return (
-                  <MenuItem
-                    key={section.name}
-                    value={section.sectionId}
-                    onClick={() => handleSectionSelection(section)}
-                    // style={{ color: section.color, fontWeight: "bold" }}
-                  >
-                    {section.name}
-                  </MenuItem>
-                );
-              })}
-            </Select>
-          </>
-          <>
-            <InputLabel required id="Avatar-label">
-              Pick Avatar
-            </InputLabel>
-            <Select
-              labelId="Avatar-label"
-              id="pick-avatar"
-              name="avatar"
-              value={formValues.avatar}
-              onChange={handleChange}
-              variant="standard"
-              fullWidth
-            >
-              {AvatarLookups.filter(
-                (ele) => ele.category === formValues.section
-              ).map((avatar) => (
-                <MenuItem key={avatar.name} value={avatar.img}>
-                  <img
-                    alt={avatar.name}
-                    src={avatar.img}
-                    style={{ width: 24, height: 24, marginRight: 8 }}
-                  />
-                  {avatar.name}
-                </MenuItem>
-              ))}
-            </Select>
-          </>
-        </>
-      </DialogContent>
-      <DialogActions>
-        <Button onClick={handleSubmit} color="primary" variant="contained">
-          Submit
-        </Button>
-      </DialogActions>
-    </Dialog>
+              <CloseIcon />
+            </IconButton>
+          </DialogTitle>
+          <DialogContent>
+            <>
+              <TextField
+                onChange={handleChange}
+                value={formValues.title}
+                autoFocus
+                required
+                margin="dense"
+                id="task-name"
+                name="title"
+                label="Task Name"
+                type="text"
+                fullWidth
+                variant="standard"
+                placeholder="Enter task name"
+              />
+              <TextField
+                onChange={handleChange}
+                value={formValues.content}
+                required
+                margin="dense"
+                id="description"
+                name="content"
+                label="Description"
+                type="text"
+                fullWidth
+                variant="standard"
+                placeholder="Enter task description"
+              />
+              <>
+                <InputLabel required>Section</InputLabel>
+                <Select
+                  labelId="section-label"
+                  id="section"
+                  name="section"
+                  value={formValues.section}
+                  variant="standard"
+                  fullWidth
+                >
+                  {sections.map((section) => {
+                    return (
+                      <MenuItem
+                        key={section.name}
+                        value={section.sectionId}
+                        onClick={() => handleSectionSelection(section)}
+                        // style={{ color: section.color, fontWeight: "bold" }}
+                      >
+                        {section.name}
+                      </MenuItem>
+                    );
+                  })}
+                </Select>
+              </>
+              <>
+                <InputLabel required id="Avatar-label">
+                  Pick Avatar
+                </InputLabel>
+                <Select
+                  labelId="Avatar-label"
+                  id="pick-avatar"
+                  name="avatar"
+                  value={formValues.avatar}
+                  onChange={handleChange}
+                  variant="standard"
+                  fullWidth
+                >
+                  {AvatarLookups.filter(
+                    (ele) => ele.category === formValues.section
+                  ).map((avatar) => (
+                    <MenuItem key={avatar.name} value={avatar.img}>
+                      <img
+                        alt={avatar.name}
+                        src={avatar.img}
+                        style={{ width: 24, height: 24, marginRight: 8 }}
+                      />
+                      {avatar.name}
+                    </MenuItem>
+                  ))}
+                </Select>
+              </>
+            </>
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={handleSubmit} color="primary" variant="contained">
+              Submit
+            </Button>
+          </DialogActions>
+        </Dialog>
+      </Box>
+    </motion.div>
   );
 }

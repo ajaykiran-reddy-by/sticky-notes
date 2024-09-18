@@ -1,11 +1,12 @@
-import { Grid2 } from "@mui/material";
+import { Grid2, IconButton, Tooltip } from "@mui/material";
 import ColumnContainer from "./ColumnContainer";
 import { useEffect, useState } from "react";
 import { initialColumnsData } from "../constants/constants";
 import { Section } from "../types/type";
 import { motion } from "framer-motion";
+import DeleteIcon from "@mui/icons-material/Delete";
 
-import deleteicon from '../SVGs/deleteicon.svg'
+import deleteicon from "../SVGs/deleteicon.svg";
 
 interface Props {
   openDialog: boolean;
@@ -21,7 +22,7 @@ const WorkspaceArea = ({ openDialog, handleCloseCb, cbInd }: Props) => {
   };
 
   const [columns, setColumns] = useState<Section[]>(initialiseSectionData());
-  const [openDelete, setOpenDelete] = useState(false)
+  const [openDelete, setOpenDelete] = useState(false);
 
   useEffect(() => {
     if (!openDialog) {
@@ -52,7 +53,7 @@ const WorkspaceArea = ({ openDialog, handleCloseCb, cbInd }: Props) => {
     e.dataTransfer.dropEffect = "move";
   };
 
-  const handleDrop = (e: any, targetColId: number|string) => {
+  const handleDrop = (e: any, targetColId: number | string) => {
     console.log("inside handle drop");
     e.preventDefault();
     e.dataTransfer.dropEffect = "move";
@@ -65,8 +66,8 @@ const WorkspaceArea = ({ openDialog, handleCloseCb, cbInd }: Props) => {
         (col) => col.sectionId === targetColId
       );
 
-      if(targetColId === 'DEL'){
-        console.log('Entered DEL')
+      if (targetColId === "DEL") {
+        console.log("Entered DEL");
         const cardToMove = columns[sourceColIndex].cards.find(
           (card) => card.id === draggedCardId
         );
@@ -83,8 +84,8 @@ const WorkspaceArea = ({ openDialog, handleCloseCb, cbInd }: Props) => {
         const updatedColumns = [...columns];
         updatedColumns[sourceColIndex] = updatedSourceCol;
         setColumns(updatedColumns);
-        setOpenDelete(false)
-        return
+        setOpenDelete(false);
+        return;
       }
 
       if (sourceColIndex !== -1 && targetColIndex !== -1) {
@@ -145,62 +146,62 @@ const WorkspaceArea = ({ openDialog, handleCloseCb, cbInd }: Props) => {
 
   return (
     <>
-    <Grid2 container spacing={3} style={{ position: 'relative' }}>
-      {columns.map((column, index) => (
-        <Grid2 size={{ xs: 12, md: 4 }}>
-          <motion.div
-            whileInView={{ opacity: 1, y: 0 }}
-            initial={{ opacity: 0, y: -100 }}
-            transition={{ duration: 1, delay: 0.5 + index }}
-          >
-            <ColumnContainer
-              key={column.sectionId}
-              sectionId={column.sectionId}
-              sectionName={column.sectionName}
-              cards={column.cards}
-              handleDragOver={handleDragOver}
-              handleDrop={handleDrop}
-              handleDragStart={handleDragStart}
-              handleDragEnd={handleDragEnd}
-              sectionColor={column.sectionColor}
-              handleCloseCb={handleCloseCb}
-            />
-          </motion.div>
-        </Grid2>
-      ))}
-    </Grid2>
-    <div 
-    onDrop={(e) => handleDrop(e, 'DEL')}
-    onDragOver={(e) => {
-      setOpenDelete(true)
-      e.preventDefault()
-    }}
-    onDragLeave={() => setOpenDelete(false)}
-    style={{ 
-    backgroundColor: openDelete ? '#EA4335' : '#FF0000',
-    width: '25vw',
-    border: '1px solid black',
-    position: 'sticky',
-    opacity: openDelete ? '100%' : '20%',
-    bottom: 0,
-    borderRadius: '12px 12px 0px 0px',
-    left: '50%',
-    transform: 'translateX(-50%)', 
-    transition: 'opacity 0.3s ease',
-    display: 'flex',
-    justifyContent: 'center',
-    }}>
-      <img
-                src={deleteicon}
-                alt={deleteicon}
-                style={{
-                  height: "25px",
-                  width: "25px",
-                  marginTop: "10px",
-                  paddingBottom: "10px",
-                }}  
+      <Grid2 container spacing={3} style={{ position: "relative" }}>
+        {columns.map((column, index) => (
+          <Grid2 size={{ xs: 12, md: 4 }}>
+            <motion.div
+              whileInView={{ opacity: 1, y: 0 }}
+              initial={{ opacity: 0, y: -100 }}
+              transition={{ duration: 1, delay: 0.5 + index }}
+            >
+              <ColumnContainer
+                key={column.sectionId}
+                sectionId={column.sectionId}
+                sectionName={column.sectionName}
+                cards={column.cards}
+                handleDragOver={handleDragOver}
+                handleDrop={handleDrop}
+                handleDragStart={handleDragStart}
+                handleDragEnd={handleDragEnd}
+                sectionColor={column.sectionColor}
+                handleCloseCb={handleCloseCb}
               />
-    </div>
+            </motion.div>
+          </Grid2>
+        ))}
+      </Grid2>
+      <div
+        onDrop={(e) => handleDrop(e, "DEL")}
+        onDragOver={(e) => {
+          setOpenDelete(true);
+          e.preventDefault();
+        }}
+        onDragLeave={() => setOpenDelete(false)}
+        style={{
+          backgroundColor: openDelete ? "#EA4335" : "#FF0000",
+          height: "30vh",
+          padding: "2rem",
+          border: "1px solid black",
+          // position: "sticky",
+          opacity: openDelete ? "100%" : "0%",
+          // bottom: 0,
+          borderRadius: "12px 12px 0px 0px",
+          // right: "0%",
+          // transform: "translateX(50%)",
+          transition: "opacity 1s ease",
+          display: "flex",
+          justifyContent: "center",
+          position: "absolute",
+          top: "40%",
+          right: 0,
+        }}
+      >
+        <Tooltip title="Delete">
+          <IconButton>
+            <DeleteIcon fontSize="large" />
+          </IconButton>
+        </Tooltip>
+      </div>
     </>
   );
 };

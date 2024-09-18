@@ -43,7 +43,7 @@ const ColumnContainer = (props: Section) => {
           <Grid2 container justifyContent={"center"} spacing={2}>
             {cards.map((card, index) => (
               <Grid2 size={{ xs: 12, md: 6 }}>
-                <motion.div
+                {/* <motion.div
                   animate={{ y: [-10, 10] }}
                   transition={{
                     duration: (index % 2) + 1,
@@ -52,17 +52,17 @@ const ColumnContainer = (props: Section) => {
                     repeatType: "reverse",
                     x: { type: "spring", bounce: 20 },
                   }}
-                >
-                  <TaskCard
-                    // containerRef={containerRef}
-                    handleDragStart={handleDragStart}
-                    handleDragEnd={handleDragEnd}
-                    key={card.id}
-                    color={sectionColor}
-                    handleCloseCb={props.handleCloseCb}
-                    {...card}
-                  />
-                </motion.div>
+                > */}
+                <TaskCard
+                  // containerRef={containerRef}
+                  handleDragStart={handleDragStart}
+                  handleDragEnd={handleDragEnd}
+                  key={card.id}
+                  color={sectionColor}
+                  handleCloseCb={props.handleCloseCb}
+                  {...card}
+                />
+                {/* </motion.div> */}
               </Grid2>
             ))}
           </Grid2>

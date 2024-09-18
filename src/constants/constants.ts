@@ -209,7 +209,7 @@ const initialColumnsData = [
         avatar: sports3,
         dateTime: new Date(),
         section: 4,
-      }
+      },
     ],
   },
   {
@@ -230,7 +230,7 @@ const initialColumnsData = [
   {
     sectionName: "Work",
     sectionId: 2,
-    sectionColor: "#a55beb",
+    sectionColor: "#42f593",
     cards: [
       {
         id: new Date().getTime() + Math.random(),
@@ -255,13 +255,13 @@ const initialColumnsData = [
         avatar: office3,
         dateTime: new Date(),
         section: 2,
-      }
+      },
     ],
   },
   {
     sectionName: "Travel",
     sectionId: 5,
-    sectionColor: "#a55beb",
+    sectionColor: "#e8e658",
     cards: [
       {
         id: new Date().getTime() + Math.random(),
@@ -286,13 +286,13 @@ const initialColumnsData = [
         avatar: travel3,
         dateTime: new Date(),
         section: 5,
-      }
+      },
     ],
   },
   {
     sectionName: "Finance",
     sectionId: 6,
-    sectionColor: "#a55beb",
+    sectionColor: "#e858c2",
     cards: [
       {
         id: new Date().getTime() + Math.random(),
@@ -317,7 +317,7 @@ const initialColumnsData = [
         avatar: finance3,
         dateTime: new Date(),
         section: 6,
-      }
+      },
     ],
   },
 ];
