@@ -213,21 +213,6 @@ const initialColumnsData = [
     ],
   },
   {
-    sectionName: "Cooking",
-    sectionId: 3,
-    sectionColor: "#3caaf0",
-    cards: [
-      {
-        id: new Date().getTime() + Math.random(),
-        title: "Biryani Recipie",
-        content: "Watch it in YT",
-        avatar: cooking1,
-        dateTime: new Date(),
-        section: 3,
-      },
-    ],
-  },
-  {
     sectionName: "Work",
     sectionId: 2,
     sectionColor: "#42f593",
@@ -286,6 +271,21 @@ const initialColumnsData = [
         avatar: travel3,
         dateTime: new Date(),
         section: 5,
+      },
+    ],
+  },
+  {
+    sectionName: "Cooking",
+    sectionId: 3,
+    sectionColor: "#3caaf0",
+    cards: [
+      {
+        id: new Date().getTime() + Math.random(),
+        title: "Biryani Recipie",
+        content: "Watch it in YT",
+        avatar: cooking1,
+        dateTime: new Date(),
+        section: 3,
       },
     ],
   },
