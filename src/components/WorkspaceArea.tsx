@@ -6,8 +6,6 @@ import { Section } from "../types/type";
 import { motion } from "framer-motion";
 import DeleteIcon from "@mui/icons-material/Delete";
 
-import deleteicon from "../SVGs/deleteicon.svg";
-
 interface Props {
   openDialog: boolean;
   cbInd: boolean;
@@ -102,18 +100,17 @@ const WorkspaceArea = ({ openDialog, handleCloseCb, cbInd }: Props) => {
             (card) => card.id === draggedCardId
           );
 
-          const targetIndex =  columns[sourceColIndex].cards.findIndex(
+          const targetIndex = columns[sourceColIndex].cards.findIndex(
             (card) => card.id === targetCardId
-          );; //fetch target index and replace
+          ); //fetch target index and replace
 
-
-          console.log(cardIndex, '[targetCardIndex]')
-          console.log(targetCardId, '[targetCardId]')
-          console.log(targetIndex, '[targetIndex]')
+          console.log(cardIndex, "[targetCardIndex]");
+          console.log(targetCardId, "[targetCardId]");
+          console.log(targetIndex, "[targetIndex]");
 
           const reorderedCards = [...columns[sourceColIndex].cards];
           let tmp = reorderedCards[cardIndex];
-          reorderedCards[cardIndex] = reorderedCards[targetIndex]
+          reorderedCards[cardIndex] = reorderedCards[targetIndex];
           reorderedCards[targetIndex] = tmp;
 
           const updatedColumn = {
@@ -153,10 +150,10 @@ const WorkspaceArea = ({ openDialog, handleCloseCb, cbInd }: Props) => {
     setDraggedCardId(null);
   };
 
-  const swapCard = (targetId : number) => {
-      console.log(targetId, '[targetId]')
-      setTargetCardId(targetId)
-  }
+  const swapCard = (targetId: number) => {
+    console.log(targetId, "[targetId]");
+    setTargetCardId(targetId);
+  };
 
   return (
     <>
@@ -193,10 +190,10 @@ const WorkspaceArea = ({ openDialog, handleCloseCb, cbInd }: Props) => {
         }}
         onDragLeave={() => setOpenDelete(false)}
         style={{
-          backgroundColor: openDelete ? "#EA4335" : "#FF0000",
+          backgroundColor: "#f590a7",
           height: "30vh",
           padding: "2rem",
-          border: "1px solid black",
+          border: "1px dotted #000",
           // position: "sticky",
           opacity: openDelete ? "100%" : "0%",
           // bottom: 0,
@@ -213,7 +210,7 @@ const WorkspaceArea = ({ openDialog, handleCloseCb, cbInd }: Props) => {
       >
         <Tooltip title="Delete">
           <IconButton>
-            <DeleteIcon fontSize="large" />
+            <DeleteIcon style={{ color: "#fff", fontSize: "3rem" }} />
           </IconButton>
         </Tooltip>
       </div>
