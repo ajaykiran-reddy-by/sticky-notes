@@ -140,6 +140,7 @@ const WorkspaceArea = ({ openDialog }: Props) => {
   };
 
   return (
+    <>
     <Grid2 container spacing={3} style={{ position: 'relative' }}>
       {columns.map((column, index) => (
         <Grid2 size={{ xs: 12, md: 4 }}>
@@ -162,27 +163,29 @@ const WorkspaceArea = ({ openDialog }: Props) => {
           </motion.div>
         </Grid2>
       ))}
-      <div 
-      onDrop={(e) => handleDrop(e, 'DEL')}
-      onDragOver={(e) => {
-        setOpenDelete(true)
-        e.preventDefault()
-      }}
-      onDragLeave={() => setOpenDelete(false)}
-      style={{ backgroundColor: '#FF0000',
-      width: '25vw',
-      height: openDelete ? '15%' : '5%',
-      border: '1px solid black',
-      position: 'absolute',
-      opacity: openDelete ? '100%' : '25%',
-      bottom: 0,
-      borderRadius: '12px 12px 0px 0px',
-      left: '50%',
-      transform: 'translateX(-50%)', 
-      transition: 'height 0.3s ease',
-      }}>
-      </div>
     </Grid2>
+    <div 
+    onDrop={(e) => handleDrop(e, 'DEL')}
+    onDragOver={(e) => {
+      setOpenDelete(true)
+      e.preventDefault()
+    }}
+    onDragLeave={() => setOpenDelete(false)}
+    style={{ 
+    backgroundColor: '#FF0000',
+    width: '25vw',
+    height: openDelete ? '15%' : '5%',
+    border: '1px solid black',
+    position: 'absolute',
+    opacity: openDelete ? '100%' : '25%',
+    bottom: 0,
+    borderRadius: '12px 12px 0px 0px',
+    left: '50%',
+    transform: 'translateX(-50%)', 
+    transition: 'height 0.3s ease',
+    }}>
+    </div>
+    </>
   );
 };
 
