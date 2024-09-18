@@ -115,47 +115,44 @@ export default function TodoCard({
     setFormValues(initState);
   };
 
-  return (
-    <motion.div
-      // animate={{
-      //   scale: [1, 2, 2, 1, 1],
-      //   rotate: [0, 0, 180, 180, 0],
-      //   borderRadius: ["0%", "0%", "50%", "50%", "0%"],
-      // }}
-      // transition={{
-      //   duration: 2,
-      //   ease: "easeInOut",
-      //   times: [0, 0.2, 0.5, 0.8, 1],
-      //   repeat: Infinity,
-      //   repeatDelay: 1,
-      // }}
-      whileInView={{ opacity: 1, y: 0 }}
-      initial={{ opacity: 0, y: -100 }}
-      // transition={{ duration: 1, delay: 0.5 + index }}
-    >
-      <Box>
-        <Dialog
-          open={open}
-          TransitionComponent={Transition}
-          keepMounted
-          onClose={onClose}
-          aria-describedby="alert-dialog-slide-description"
-          maxWidth="sm"
-          fullWidth
-        >
-          <DialogTitle>
-            {isEditMode ? `Edit ${formValues.title}` : " Add Note"}
+  function getDisabledStatus() {
+    return (
+      !formValues.title ||
+      !formValues.content ||
+      !formValues.section ||
+      !formValues.avatar
+    );
+  }
 
-            <IconButton
-              aria-label="close"
-              onClick={onClose}
-              sx={{ position: "absolute", right: 8, top: 8 }}
+  return (
+    <Box>
+      <Dialog
+        open={open}
+        TransitionComponent={Transition}
+        keepMounted
+        onClose={onClose}
+        aria-describedby="alert-dialog-slide-description"
+        maxWidth="sm"
+        fullWidth
+      >
+        <DialogTitle>
+          {isEditMode ? `Edit ${formValues.title}` : " Add Note"}
+
+          <IconButton
+            aria-label="close"
+            onClick={onClose}
+            sx={{ position: "absolute", right: 8, top: 8 }}
+          >
+            <CloseIcon />
+          </IconButton>
+        </DialogTitle>
+        <DialogContent>
+          <div style={{ overflowX: "hidden" }}>
+            <motion.div
+              whileInView={{ opacity: 1, x: 0 }}
+              initial={{ opacity: 0, x: -100 }}
+              transition={{ duration: 1, delay: 0.5 }}
             >
-              <CloseIcon />
-            </IconButton>
-          </DialogTitle>
-          <DialogContent>
-            <>
               <TextField
                 onChange={handleChange}
                 value={formValues.title}
@@ -183,6 +180,12 @@ export default function TodoCard({
                 variant="standard"
                 placeholder="Enter task description"
               />
+            </motion.div>
+            <motion.div
+              whileInView={{ opacity: 1, x: 0 }}
+              initial={{ opacity: 0, x: 100 }}
+              transition={{ duration: 1, delay: 0.5 }}
+            >
               <>
                 <InputLabel required>Section</InputLabel>
                 <Select
@@ -199,7 +202,13 @@ export default function TodoCard({
                         key={section.name}
                         value={section.sectionId}
                         onClick={() => handleSectionSelection(section)}
-                        // style={{ color: section.color, fontWeight: "bold" }}
+                        style={
+                          {
+                            // backgroundColor: section.color,
+                            // fontWeight: "bold",
+                            // opacity: "80%",
+                          }
+                        }
                       >
                         {section.name}
                       </MenuItem>
@@ -234,15 +243,27 @@ export default function TodoCard({
                   ))}
                 </Select>
               </>
-            </>
-          </DialogContent>
-          <DialogActions>
-            <Button onClick={handleSubmit} color="primary" variant="contained">
+            </motion.div>
+          </div>
+        </DialogContent>
+        <DialogActions>
+          <motion.div
+            className="box"
+            whileHover={{ scale: 1.1 }}
+            whileTap={{ scale: 0.9 }}
+            transition={{ type: "spring", stiffness: 400, damping: 20 }}
+          >
+            <Button
+              disabled={getDisabledStatus()}
+              onClick={handleSubmit}
+              color="primary"
+              variant="contained"
+            >
               Submit
             </Button>
-          </DialogActions>
-        </Dialog>
-      </Box>
-    </motion.div>
+          </motion.div>
+        </DialogActions>
+      </Dialog>
+    </Box>
   );
 }
