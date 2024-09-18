@@ -14,6 +14,7 @@ const ColumnContainer = (props: Section) => {
     sectionColor,
     sectionId,
     sectionName,
+    swapCard,
   } = props;
 
   const containerRef = useRef<HTMLDivElement | null>(null);
@@ -57,6 +58,7 @@ const ColumnContainer = (props: Section) => {
                   // containerRef={containerRef}
                   handleDragStart={handleDragStart}
                   handleDragEnd={handleDragEnd}
+                  swapCard={swapCard}
                   key={card.id}
                   color={sectionColor}
                   handleCloseCb={props.handleCloseCb}

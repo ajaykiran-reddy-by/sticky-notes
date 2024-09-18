@@ -15,6 +15,7 @@ const TaskCard = ({
   handleDragStart,
   handleDragEnd,
   handleCloseCb,
+  swapCard,
 }: {
   id: number;
   title: string;
@@ -27,6 +28,7 @@ const TaskCard = ({
   handleDragStart: Function;
   handleDragEnd: Function;
   handleCloseCb: Function;
+  swapCard: Function;
 }) => {
   const [isDragging, setIsDragging] = useState(false);
   const [isHovering, setIsHovering] = useState(false);
@@ -61,6 +63,7 @@ const TaskCard = ({
           draggable
           onDragStart={(e: any) => handleDragStart(e, id)}
           onDragEnd={() => handleDragEnd()}
+          onDragEnter={() => swapCard(id)}
           sx={{
             display: "flex",
             justifyContent: "space-between",

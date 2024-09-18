@@ -23,6 +23,7 @@ const WorkspaceArea = ({ openDialog, handleCloseCb, cbInd }: Props) => {
 
   const [columns, setColumns] = useState<Section[]>(initialiseSectionData());
   const [openDelete, setOpenDelete] = useState(false);
+  const [targetCardId ,setTargetCardId] = useState<number>();
 
   useEffect(() => {
     if (!openDialog) {
@@ -96,16 +97,24 @@ const WorkspaceArea = ({ openDialog, handleCloseCb, cbInd }: Props) => {
 
         if (!cardToMove) return;
 
-        if (sourceColIndex === targetColIndex) {
+        if (sourceColIndex === targetColIndex && targetCardId) {
           const cardIndex = columns[sourceColIndex].cards.findIndex(
             (card) => card.id === draggedCardId
           );
 
-          const targetIndex = 1; //fetch target index and replace
+          const targetIndex =  columns[sourceColIndex].cards.findIndex(
+            (card) => card.id === targetCardId
+          );; //fetch target index and replace
+
+
+          console.log(cardIndex, '[targetCardIndex]')
+          console.log(targetCardId, '[targetCardId]')
+          console.log(targetIndex, '[targetIndex]')
 
           const reorderedCards = [...columns[sourceColIndex].cards];
-          reorderedCards.splice(cardIndex, 1);
-          reorderedCards.splice(targetIndex, 0, cardToMove);
+          let tmp = reorderedCards[cardIndex];
+          reorderedCards[cardIndex] = reorderedCards[targetIndex]
+          reorderedCards[targetIndex] = tmp;
 
           const updatedColumn = {
             ...columns[sourceColIndex],
@@ -144,6 +153,11 @@ const WorkspaceArea = ({ openDialog, handleCloseCb, cbInd }: Props) => {
     setDraggedCardId(null);
   };
 
+  const swapCard = (targetId : number) => {
+      console.log(targetId, '[targetId]')
+      setTargetCardId(targetId)
+  }
+
   return (
     <>
       <Grid2 container spacing={3} style={{ position: "relative" }}>
@@ -165,6 +179,7 @@ const WorkspaceArea = ({ openDialog, handleCloseCb, cbInd }: Props) => {
                 handleDragEnd={handleDragEnd}
                 sectionColor={column.sectionColor}
                 handleCloseCb={handleCloseCb}
+                swapCard={swapCard}
               />
             </motion.div>
           </Grid2>
@@ -185,10 +200,10 @@ const WorkspaceArea = ({ openDialog, handleCloseCb, cbInd }: Props) => {
           // position: "sticky",
           opacity: openDelete ? "100%" : "0%",
           // bottom: 0,
-          borderRadius: "12px 12px 0px 0px",
+          borderRadius: "12px 0px 0px 12px",
           // right: "0%",
           // transform: "translateX(50%)",
-          transition: "opacity 1s ease",
+          transition: "opacity 0.5s ease-in",
           display: "flex",
           justifyContent: "center",
           position: "absolute",
