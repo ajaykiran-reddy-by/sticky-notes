@@ -55,10 +55,14 @@ const initState = {
   sectionName: "",
 };
 
-export default function TodoCard({ open, onClose, formData }: TodoCardProps) {
+export default function TodoCard({
+  open,
+  onClose,
+  formData,
+  isEditMode,
+}: TodoCardProps) {
   const [formValues, setFormValues] = React.useState<FormState>(initState);
   const sections = sectionLookups;
-  const [isEditMode, setIsEditMode] = useState(false);
 
   const handleChange = (e: any) => {
     const { name, value } = e.target;
@@ -77,11 +81,10 @@ export default function TodoCard({ open, onClose, formData }: TodoCardProps) {
   };
 
   useEffect(() => {
-    if(formData){
-      setFormValues(formData)
+    if (formData) {
+      setFormValues(formData);
     }
   }, [formData]);
-  console.log(formValues,'formValues')
   const handleSubmit = () => {
     let data: any = localStorage.getItem("columnsData") || "{}";
     data = JSON.parse(data) || null;
@@ -94,8 +97,17 @@ export default function TodoCard({ open, onClose, formData }: TodoCardProps) {
     let targetIndex = tempData.findIndex(
       (sec: Section) => sec.sectionId === formValues.section
     );
-    targetSection?.cards.push(formValues);
-    tempData[targetIndex] = targetSection;
+    if (isEditMode) {
+      const cards = tempData[targetIndex].cards;
+      const targetCardIndex = cards.findIndex(
+        (card: any) => card.id === formValues.id
+      );
+      cards[targetCardIndex] = formValues;
+    } else {
+      targetSection?.cards.push(formValues);
+      tempData[targetIndex] = targetSection;
+    }
+
     localStorage.setItem("columnsData", JSON.stringify(tempData));
     onClose();
     setFormValues(initState);
@@ -112,7 +124,8 @@ export default function TodoCard({ open, onClose, formData }: TodoCardProps) {
       fullWidth
     >
       <DialogTitle>
-        Add Note
+        {isEditMode ? `Edit ${formValues.title}` : " Add Note"}
+
         <IconButton
           aria-label="close"
           onClick={onClose}

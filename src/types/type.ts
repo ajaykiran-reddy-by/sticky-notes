@@ -7,6 +7,7 @@ interface Section {
   handleDrop: Function;
   handleDragStart: Function;
   handleDragEnd: Function;
+  handleCloseCb?: Function;
 }
 
 interface Card {

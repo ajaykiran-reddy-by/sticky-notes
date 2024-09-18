@@ -59,6 +59,7 @@ const ColumnContainer = (props: Section) => {
                     handleDragEnd={handleDragEnd}
                     key={card.id}
                     color={sectionColor}
+                    handleCloseCb={props.handleCloseCb}
                     {...card}
                   />
                 </motion.div>

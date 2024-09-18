@@ -5,6 +5,7 @@ import WorkspaceArea from "./components/WorkspaceArea";
 
 function App() {
   const [openDialog, setOpenDialog] = useState(false);
+  const [cbInd, setCbInd] = useState(false);
 
   const handleOpenDialog = () => {
     setOpenDialog(true);
@@ -12,6 +13,10 @@ function App() {
 
   const handleCloseDialog = () => {
     setOpenDialog(false);
+  };
+
+  const handleCloseCb = () => {
+    setCbInd((prevState) => !prevState);
   };
 
   return (
@@ -55,9 +60,17 @@ function App() {
         </Grid2>
       </AppBar>
       <Box mt={2} pl={3} pr={3}>
-        <WorkspaceArea openDialog={openDialog} />
+        <WorkspaceArea
+          cbInd={cbInd}
+          openDialog={openDialog}
+          handleCloseCb={handleCloseCb}
+        />
       </Box>
-      <TodoCard open={openDialog} onClose={handleCloseDialog} isEditMode={false}/>
+      <TodoCard
+        open={openDialog}
+        onClose={handleCloseDialog}
+        isEditMode={false}
+      />
     </React.Fragment>
   );
 }

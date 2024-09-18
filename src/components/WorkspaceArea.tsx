@@ -9,9 +9,11 @@ import deleteicon from '../SVGs/deleteicon.svg'
 
 interface Props {
   openDialog: boolean;
+  cbInd: boolean;
+  handleCloseCb: Function;
 }
 
-const WorkspaceArea = ({ openDialog }: Props) => {
+const WorkspaceArea = ({ openDialog, handleCloseCb, cbInd }: Props) => {
   const initialiseSectionData = () => {
     let data: any = localStorage.getItem("columnsData") || "{}";
     data = JSON.parse(data) || null;
@@ -26,7 +28,7 @@ const WorkspaceArea = ({ openDialog }: Props) => {
       let result = initialiseSectionData();
       setColumns(result);
     }
-  }, [openDialog]);
+  }, [openDialog, cbInd]);
 
   useEffect(() => {
     localStorage.setItem("columnsData", JSON.stringify(columns));
@@ -161,6 +163,7 @@ const WorkspaceArea = ({ openDialog }: Props) => {
               handleDragStart={handleDragStart}
               handleDragEnd={handleDragEnd}
               sectionColor={column.sectionColor}
+              handleCloseCb={handleCloseCb}
             />
           </motion.div>
         </Grid2>
