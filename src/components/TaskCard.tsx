@@ -52,6 +52,10 @@ const TaskCard = ({
         initial="offscreen"
         whileInView="onscreen"
         viewport={{ once: true, amount: 0.8 }}
+        style={{
+          display:'flex',
+          justifyContent: "center",
+          alignItems: "center",}}
       >
         <ConfigureTodo
           open={openDialog}
@@ -66,7 +70,7 @@ const TaskCard = ({
           onDragEnter={() => swapCard(id)}
           sx={{
             display: "flex",
-            justifyContent: "space-between",
+            justifyContent: "center",
             alignItems: "center",
             borderRadius: "15px",
             boxShadow: isDragging ? "6px 6px" : "none",
@@ -76,7 +80,8 @@ const TaskCard = ({
             position: "relative",
             overflow: "visible",
             backgroundColor: "#fff",
-            maxWidth: "80%",
+            marginTop: '10px',
+            width: "50%",
           }}
           onMouseEnter={() => setIsHovering(true)}
           onMouseLeave={() => setIsHovering(false)}
@@ -130,7 +135,7 @@ const TaskCard = ({
               position: "absolute",
               top: 0,
               right: 0,
-              width: "15%",
+              width: "8%",
               height: "100%",
               backgroundColor: color,
               borderTopRightRadius: "12px",

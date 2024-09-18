@@ -1,8 +1,8 @@
 import { Grid2, Typography } from "@mui/material";
 import TaskCard from "./TaskCard";
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import { Section } from "../types/type";
-import { motion } from "framer-motion";
+import { motion, Reorder, useDragControls } from "framer-motion";
 
 const ColumnContainer = (props: Section) => {
   const {
@@ -17,7 +17,9 @@ const ColumnContainer = (props: Section) => {
     swapCard,
   } = props;
 
+  const controls = useDragControls()
   const containerRef = useRef<HTMLDivElement | null>(null);
+  const [items, setItems] = useState(cards.map(card => card.id))
 
   return (
     <motion.div
@@ -41,9 +43,11 @@ const ColumnContainer = (props: Section) => {
               {sectionName}
             </Typography>
           </Grid2>
-          <Grid2 container justifyContent={"center"} spacing={2}>
+          <Reorder.Group axis="y" values={items} onReorder={setItems} style={{ display: 'flex', flexDirection: 'column' , width: '100%', margin: 0, padding: 0}}>
             {cards.map((card, index) => (
-              <Grid2 size={{ xs: 12, md: 6 }}>
+                <Reorder.Item 
+                dragControls={controls}
+                key={card.id} value={index} style={{ justifyContent: 'center', alignItems: 'center', alignContent: 'center' }}>
                 {/* <motion.div
                   animate={{ y: [-10, 10] }}
                   transition={{
@@ -63,13 +67,13 @@ const ColumnContainer = (props: Section) => {
                   color={sectionColor}
                   handleCloseCb={props.handleCloseCb}
                   {...card}
-                />
+                ></TaskCard>
                 {/* </motion.div> */}
-              </Grid2>
+                </Reorder.Item>
             ))}
+            </Reorder.Group>
           </Grid2>
         </Grid2>
-      </Grid2>
     </motion.div>
   );
 };

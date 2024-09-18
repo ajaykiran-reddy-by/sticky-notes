@@ -59,7 +59,7 @@ function App() {
           </Grid2>
         </Grid2>
       </AppBar>
-      <Box mt={2} pl={3} pr={3}>
+      <Box mt={2} pl={3} pr={3} sx={{backgroundColor: 'white'}}>
         <WorkspaceArea
           cbInd={cbInd}
           openDialog={openDialog}
