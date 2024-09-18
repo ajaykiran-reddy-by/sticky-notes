@@ -57,7 +57,7 @@ function App() {
       <Box mt={2} pl={3} pr={3}>
         <WorkspaceArea openDialog={openDialog} />
       </Box>
-      <TodoCard open={openDialog} onClose={handleCloseDialog} />
+      <TodoCard open={openDialog} onClose={handleCloseDialog} isEditMode={false}/>
     </React.Fragment>
   );
 }

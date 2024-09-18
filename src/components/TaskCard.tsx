@@ -2,10 +2,8 @@ import { Card, CardContent, Grid2, Typography } from "@mui/material";
 import { useState } from "react";
 import { motion } from "framer-motion";
 import EditIcon from '@mui/icons-material/Edit';
-
-const handleEditCard:any =()=>{
-//yet to code
-}
+import TodoCard from "./ConfigureTodo";
+import { use } from "framer-motion/client";
 
 const TaskCard = ({
   id,
@@ -14,6 +12,7 @@ const TaskCard = ({
   avatar,
   dateTime,
   color,
+  section,
   // containerRef,
   handleDragStart,
   handleDragEnd,
@@ -24,14 +23,28 @@ const TaskCard = ({
   avatar: string;
   dateTime: Date | string;
   color: string;
+  section: string;
   // containerRef: HTMLDivElement | null;
   handleDragStart: Function;
   handleDragEnd: Function;
 }) => {
   const [isDragging, setIsDragging] = useState(false);
   const [isHovering, setIsHovering] = useState(false);
-  
+  const [openDialog, setOpenDialog] = useState(false);
+  const [selectedCard, setSelectedCard] = useState(null);
+
+  const handleCloseDialog = () => {
+    setOpenDialog(false);
+  };
+
+  const handleEditCard =(data:any)=>{
+    setOpenDialog(true);
+    setSelectedCard(data)
+  }
+
   return (
+    <>
+    <TodoCard open={openDialog} onClose={handleCloseDialog} isEditMode={false} formData={selectedCard} />
     <Card
       draggable
       onDragStart={(e: any) => handleDragStart(e, id)}
@@ -116,10 +129,16 @@ const TaskCard = ({
           zIndex: 1,
           cursor: "pointer" 
         }}
-        onClick={handleEditCard}
+        onClick={()=>handleEditCard({id,
+          title,
+          content,
+          avatar,
+          dateTime,
+          color})}
       />}
       
     </Card>
+    </>
   );
 };
 

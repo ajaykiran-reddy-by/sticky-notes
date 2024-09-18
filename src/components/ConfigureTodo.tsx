@@ -17,10 +17,13 @@ import {
 import CloseIcon from "@mui/icons-material/Close";
 import { AvatarLookups, sectionLookups } from "../constants/constants";
 import { Section } from "../types/type";
+import { useEffect, useState } from "react";
 
 interface TodoCardProps {
   open: boolean;
   onClose: () => void;
+  isEditMode: boolean;
+  formData?: any;
 }
 
 const Transition = React.forwardRef(function Transition(
@@ -52,9 +55,10 @@ const initState = {
   sectionName: "",
 };
 
-export default function TodoCard({ open, onClose }: TodoCardProps) {
+export default function TodoCard({ open, onClose, formData }: TodoCardProps) {
   const [formValues, setFormValues] = React.useState<FormState>(initState);
   const sections = sectionLookups;
+  const [isEditMode, setIsEditMode] = useState(false);
 
   const handleChange = (e: any) => {
     const { name, value } = e.target;
@@ -72,6 +76,12 @@ export default function TodoCard({ open, onClose }: TodoCardProps) {
     });
   };
 
+  useEffect(() => {
+    if(formData){
+      setFormValues(formData)
+    }
+  }, [formData]);
+  console.log(formValues,'formValues')
   const handleSubmit = () => {
     let data: any = localStorage.getItem("columnsData") || "{}";
     data = JSON.parse(data) || null;
@@ -87,7 +97,7 @@ export default function TodoCard({ open, onClose }: TodoCardProps) {
     targetSection?.cards.push(formValues);
     tempData[targetIndex] = targetSection;
     localStorage.setItem("columnsData", JSON.stringify(tempData));
-    onClose(); // Close the dialog
+    onClose();
     setFormValues(initState);
   };
 
