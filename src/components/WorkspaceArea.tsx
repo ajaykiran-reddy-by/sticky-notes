@@ -21,7 +21,7 @@ const WorkspaceArea = ({ openDialog, handleCloseCb, cbInd }: Props) => {
 
   const [columns, setColumns] = useState<Section[]>(initialiseSectionData());
   const [openDelete, setOpenDelete] = useState(false);
-  const [targetCardId ,setTargetCardId] = useState<number | null>();
+  const [targetCardId, setTargetCardId] = useState<number | null>();
 
   useEffect(() => {
     if (!openDialog) {
@@ -120,7 +120,7 @@ const WorkspaceArea = ({ openDialog, handleCloseCb, cbInd }: Props) => {
 
           const updatedColumns = [...columns];
           updatedColumns[sourceColIndex] = updatedColumn;
-          setTargetCardId(null)
+          setTargetCardId(null);
           setColumns(updatedColumns);
         } else {
           //handle moving cards to different columns
@@ -157,13 +157,13 @@ const WorkspaceArea = ({ openDialog, handleCloseCb, cbInd }: Props) => {
 
   return (
     <>
-      <Grid2 container spacing={3} style={{ position: "relative"}}>
+      <Grid2 container spacing={3} style={{ position: "relative" }}>
         {columns.map((column, index) => (
-          <Grid2 size={{ xs: 12, md: 4 }}>
+          <Grid2 size={{ xs: 12, md: 6, lg: 4 }}>
             <motion.div
               whileInView={{ opacity: 1, y: 0 }}
               initial={{ opacity: 0, y: -100 }}
-              transition={{ duration: 1, delay: 0.5 + index }}
+              transition={{ duration: 1, delay: index / 10 }}
             >
               <ColumnContainer
                 key={column.sectionId}

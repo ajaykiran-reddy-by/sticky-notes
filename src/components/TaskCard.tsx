@@ -53,9 +53,10 @@ const TaskCard = ({
         whileInView="onscreen"
         viewport={{ once: true, amount: 0.8 }}
         style={{
-          display:'flex',
+          display: "flex",
           justifyContent: "center",
-          alignItems: "center",}}
+          alignItems: "center",
+        }}
       >
         <ConfigureTodo
           open={openDialog}
@@ -74,13 +75,13 @@ const TaskCard = ({
             alignItems: "center",
             borderRadius: "15px",
             boxShadow: isDragging ? "6px 6px" : "none",
-            border: "1px solid #020202",
+            border: "2px solid #020202",
             borderRight: "none",
             padding: "10px",
             position: "relative",
             overflow: "visible",
             backgroundColor: "#fff",
-            marginTop: '10px',
+            marginTop: "10px",
             width: "50%",
           }}
           onMouseEnter={() => setIsHovering(true)}
@@ -140,9 +141,7 @@ const TaskCard = ({
               backgroundColor: color,
               borderTopRightRadius: "12px",
               borderBottomRightRadius: "12px",
-              borderRight: "1px solid black",
-              borderTop: "0.25px solid black",
-              borderBottom: "0.5px solid black",
+              borderRight: "2px solid black",
             }}
           />
           {isHovering && (
