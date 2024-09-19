@@ -17,6 +17,7 @@ interface Props {
 
 const WorkspaceArea = ({ openDialog, handleCloseCb, cbInd }: Props) => {
   const [showSnackbar, setShowSnackbar] = useState(false);
+  const [snackbarMessage, setSnackbarMessage] = useState('')
 
   const initialiseSectionData = () => {
     let data: any = localStorage.getItem("columnsData") || "{}";
@@ -59,6 +60,7 @@ const WorkspaceArea = ({ openDialog, handleCloseCb, cbInd }: Props) => {
 
   const resetSnackbar = () => {
     setShowSnackbar(false)
+    setSnackbarMessage('')
   }
 
 
@@ -95,6 +97,7 @@ const WorkspaceArea = ({ openDialog, handleCloseCb, cbInd }: Props) => {
         updatedColumns[sourceColIndex] = updatedSourceCol;
         setColumns(updatedColumns);
         setOpenDelete(false);
+        setSnackbarMessage("Successfully deleted "+ cardToMove.title)
         setShowSnackbar(true);
   
         return;
@@ -194,11 +197,14 @@ const WorkspaceArea = ({ openDialog, handleCloseCb, cbInd }: Props) => {
     updatedColumns[sectionIndex] = updatedSection;
 
     setColumns(updatedColumns)
+
+    setSnackbarMessage("Successfully created a card in " + columns[sectionIndex].sectionName)
+    setShowSnackbar(true);
   }
 
   return (
     <>
-     {showSnackbar && <TransitionsSnackbar open={showSnackbar} message={'Successfully deleted a card'} resetSnackbar={resetSnackbar}/>}
+     {showSnackbar && <TransitionsSnackbar open={showSnackbar} message={snackbarMessage} resetSnackbar={resetSnackbar}/>}
       <Grid2 container spacing={3} style={{ position: "relative"}}>
         {columns.map((column, index) => (
           <Grid2 size={{ xs: 12, md: 6, lg: 4 }}>
