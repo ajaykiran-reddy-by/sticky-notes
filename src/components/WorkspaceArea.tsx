@@ -6,6 +6,7 @@ import { Section } from "../types/type";
 import { motion } from "framer-motion";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { TransitionsSnackbar } from "./Snackbar";
+import { SettingsOutlined } from "@mui/icons-material";
 
 interface Props {
   openDialog: boolean;
@@ -55,6 +56,11 @@ const WorkspaceArea = ({ openDialog, handleCloseCb, cbInd }: Props) => {
     e.dataTransfer.dropEffect = "move";
   };
 
+  const resetSnackbar = () => {
+    setShowSnackbar(false)
+  }
+
+
   const handleDrop = (e: any, targetColId: number | string) => {
 
     console.log("inside handle drop");
@@ -89,6 +95,7 @@ const WorkspaceArea = ({ openDialog, handleCloseCb, cbInd }: Props) => {
         setColumns(updatedColumns);
         setOpenDelete(false);
         setShowSnackbar(true);
+  
         return;
       }
 
@@ -162,13 +169,14 @@ const WorkspaceArea = ({ openDialog, handleCloseCb, cbInd }: Props) => {
 
   return (
     <>
+     {showSnackbar && <TransitionsSnackbar open={showSnackbar} message={'Successfully deleted a card'} resetSnackbar={resetSnackbar}/>}
       <Grid2 container spacing={3} style={{ position: "relative"}}>
         {columns.map((column, index) => (
           <Grid2 size={{ xs: 12, md: 4 }}>
             <motion.div
               whileInView={{ opacity: 1, y: 0 }}
               initial={{ opacity: 0, y: -100 }}
-              transition={{ duration: 1, delay: 0.5 + index }}
+              transition={{ duration: 1, delay: index/8 }}
             >
               <ColumnContainer
                 key={column.sectionId}
@@ -194,8 +202,6 @@ const WorkspaceArea = ({ openDialog, handleCloseCb, cbInd }: Props) => {
           e.preventDefault();
         }}
         onDragLeave={() => {setOpenDelete(false);
-          
-          {showSnackbar && <TransitionsSnackbar />}
         }}
         style={{
           backgroundColor: "#f590a7",

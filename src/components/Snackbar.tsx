@@ -9,7 +9,10 @@ function SlideTransition(props: SlideProps) {
     return <Slide {...props} direction="up" />;
 }
 
-export function TransitionsSnackbar() {
+export function TransitionsSnackbar(props: any) {
+  const {open,message,resetSnackbar} = props;
+
+
     const [state, setState] = React.useState<{
         open: boolean;
         Transition: React.ComponentType<
@@ -18,36 +21,43 @@ export function TransitionsSnackbar() {
         }
         >;
     }>({
-        open: false,
-        Transition: Slide,
+        open: open,
+        Transition: SlideTransition,
     });
 
-    const handleClick =
-    (
-        Transition: React.ComponentType<
-            TransitionProps & {
-            children: React.ReactElement<any, any>;
-            }
-        >,
-    ) =>
-    () => {
-    setState({
-        open: true,
-        Transition,
-    });
-    console.log('HandleClick function compiled!')
-    };
+    // const handleClick =
+    // (
+    //     Transition: React.ComponentType<
+    //         TransitionProps & {
+    //         children: React.ReactElement<any>;
+    //         }
+    //     >,
+    // ) =>
+    // () => {
+    // setState({
+    //     open: true,
+    //     Transition,
+    // });
+    // console.log('HandleClick function compiled!')
+    // };
     
-    useEffect(() => {
-        handleClick(SlideTransition);
-        console.log('useEffect complied')
-    }, []);
+    // useEffect(() => {
+    //     handleClick(SlideTransition);
+    //     console.log('useEffect complied')
+    // }, []);
 
-    const handleClose = () => {
-        setState({
-          ...state,
-          open: false,
-        });
+
+    function timeout(delay: number) {
+      return new Promise( res => setTimeout(res, delay) );
+  }
+
+    const handleClose = async () => {
+      setState({
+        ...state,
+        open: false,
+      });
+        await timeout(1000);
+        resetSnackbar()
         console.log('Handleclose compiled')
       };
 
@@ -57,7 +67,7 @@ export function TransitionsSnackbar() {
             open={state.open}
             onClose={handleClose}
             TransitionComponent={state.Transition}
-            message="Succeffully Created a card"
+            message={message}
             key={state.Transition.name}
             autoHideDuration={4000}
           />
