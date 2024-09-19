@@ -1,8 +1,9 @@
-import { Grid2, Typography } from "@mui/material";
+import { Grid2, IconButton, Typography } from "@mui/material";
 import TaskCard from "./TaskCard";
 import { useRef, useState } from "react";
 import { Section } from "../types/type";
 import { motion, Reorder, useDragControls } from "framer-motion";
+import AddIcon from '@mui/icons-material/Add';
 
 const ColumnContainer = (props: Section) => {
   const {
@@ -14,6 +15,7 @@ const ColumnContainer = (props: Section) => {
     sectionColor,
     sectionId,
     sectionName,
+    AddCard,
     swapCard,
   } = props;
 
@@ -39,9 +41,7 @@ const ColumnContainer = (props: Section) => {
         onDrop={(e: any) => handleDrop(e, sectionId)}
         style={{
           padding: "0.5rem",
-          overflowY: "scroll",
-          overflowX: "hidden",
-          height: "10vh",
+          paddingBottom: '2rem'
         }}
       >
         <Reorder.Group
@@ -55,6 +55,8 @@ const ColumnContainer = (props: Section) => {
             width: "100%",
             margin: 0,
             padding: 0,
+            justifyContent: 'center',
+            alignItems: 'center'
           }}
         >
           <Typography
@@ -62,15 +64,12 @@ const ColumnContainer = (props: Section) => {
             style={{ fontWeight: 600 }}
             // align="center"
             color="primary"
+            align="center"
           >
             {sectionName}
           </Typography>
           {cards.map((card, index) => (
-            <motion.div
-              whileInView={{ opacity: 1, y: 0 }}
-              initial={{ opacity: 0, y: 100 }}
-              transition={{ duration: 1, delay: 0.5 }}
-            >
+            
               <Reorder.Item
                 dragControls={controls}
                 key={card.id}
@@ -79,8 +78,14 @@ const ColumnContainer = (props: Section) => {
                   justifyContent: "center",
                   alignItems: "center",
                   alignContent: "center",
+                  minWidth: '100%'
                 }}
               >
+                <motion.div
+              whileInView={{ opacity: 1, y: 0 }}
+              initial={{ opacity: 0, y: 25 }}
+              transition={{ duration: 0.25, delay: 0.25 }}
+            >
                 <TaskCard
                   // containerRef={containerRef}
                   handleDragStart={handleDragStart}
@@ -92,8 +97,8 @@ const ColumnContainer = (props: Section) => {
                   {...card}
                 ></TaskCard>
                 {/* </motion.div> */}
+                </motion.div>
               </Reorder.Item>
-            </motion.div>
           ))}
           {cards.length === 0 && (
             <div style={{ textAlign: "center" }}>
@@ -169,6 +174,9 @@ const ColumnContainer = (props: Section) => {
               </svg>
             </div>
           )}
+          <IconButton style={{width:'40px', marginTop: '20px'}} onClick={() => AddCard(sectionId)}>
+            <AddIcon style={{width:'30px'}}/>
+          </IconButton>
         </Reorder.Group>
       </Grid2>
     </motion.div>

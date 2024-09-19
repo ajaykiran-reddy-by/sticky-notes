@@ -2,11 +2,12 @@ import { Grid2, IconButton, Tooltip } from "@mui/material";
 import ColumnContainer from "./ColumnContainer";
 import { useEffect, useState } from "react";
 import { initialColumnsData } from "../constants/constants";
-import { Section } from "../types/type";
+import { Card, Section } from "../types/type";
 import { motion } from "framer-motion";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { TransitionsSnackbar } from "./Snackbar";
 import { SettingsOutlined } from "@mui/icons-material";
+import personal1 from "../SVGs/personal1.svg";
 
 interface Props {
   openDialog: boolean;
@@ -167,6 +168,34 @@ const WorkspaceArea = ({ openDialog, handleCloseCb, cbInd }: Props) => {
     setTargetCardId(targetId);
   };
 
+
+  const AddCard = (sectionId: number) => {
+    const newCard : Card = {
+      id: new Date().getTime() + Math.random(),
+      title: "New Card",
+      content: "Edit this card to add some content!",
+      avatar: personal1,
+      dateTime: new Date(),
+      section: sectionId.toString(),
+    }
+
+    const sectionIndex = columns.findIndex(
+      (col) => col.sectionId === sectionId
+    );
+
+    const updatedSection = {
+      ...columns[sectionIndex],
+      cards: columns[sectionIndex].cards.concat([newCard]),
+    };
+
+    console.log(updatedSection,'[new card section]')
+
+    const updatedColumns = [...columns];
+    updatedColumns[sectionIndex] = updatedSection;
+
+    setColumns(updatedColumns)
+  }
+
   return (
     <>
      {showSnackbar && <TransitionsSnackbar open={showSnackbar} message={'Successfully deleted a card'} resetSnackbar={resetSnackbar}/>}
@@ -189,6 +218,7 @@ const WorkspaceArea = ({ openDialog, handleCloseCb, cbInd }: Props) => {
                 handleDragEnd={handleDragEnd}
                 sectionColor={column.sectionColor}
                 handleCloseCb={handleCloseCb}
+                AddCard={AddCard}
                 swapCard={swapCard}
               />
             </motion.div>
