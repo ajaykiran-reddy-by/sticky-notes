@@ -5,6 +5,7 @@ import { initialColumnsData } from "../constants/constants";
 import { Section } from "../types/type";
 import { motion } from "framer-motion";
 import DeleteIcon from "@mui/icons-material/Delete";
+import { TransitionsSnackbar } from "./Snackbar";
 
 interface Props {
   openDialog: boolean;
@@ -13,6 +14,8 @@ interface Props {
 }
 
 const WorkspaceArea = ({ openDialog, handleCloseCb, cbInd }: Props) => {
+  const [showSnackbar, setShowSnackbar] = useState(false);
+
   const initialiseSectionData = () => {
     let data: any = localStorage.getItem("columnsData") || "{}";
     data = JSON.parse(data) || null;
@@ -53,6 +56,7 @@ const WorkspaceArea = ({ openDialog, handleCloseCb, cbInd }: Props) => {
   };
 
   const handleDrop = (e: any, targetColId: number | string) => {
+
     console.log("inside handle drop");
     e.preventDefault();
     e.dataTransfer.dropEffect = "move";
@@ -84,6 +88,7 @@ const WorkspaceArea = ({ openDialog, handleCloseCb, cbInd }: Props) => {
         updatedColumns[sourceColIndex] = updatedSourceCol;
         setColumns(updatedColumns);
         setOpenDelete(false);
+        setShowSnackbar(true);
         return;
       }
 
@@ -188,7 +193,10 @@ const WorkspaceArea = ({ openDialog, handleCloseCb, cbInd }: Props) => {
           setOpenDelete(true);
           e.preventDefault();
         }}
-        onDragLeave={() => setOpenDelete(false)}
+        onDragLeave={() => {setOpenDelete(false);
+          
+          {showSnackbar && <TransitionsSnackbar />}
+        }}
         style={{
           backgroundColor: "#f590a7",
           height: "30vh",

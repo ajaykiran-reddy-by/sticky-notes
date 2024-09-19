@@ -20,6 +20,7 @@ import { AvatarLookups, sectionLookups } from "../constants/constants";
 import { Section } from "../types/type";
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
+import TransitionsSnackbar from "./Snackbar";
 
 interface TodoCardProps {
   open: boolean;
@@ -113,6 +114,7 @@ export default function TodoCard({
     localStorage.setItem("columnsData", JSON.stringify(tempData));
     onClose();
     setFormValues(initState);
+    
   };
 
   function getDisabledStatus() {
