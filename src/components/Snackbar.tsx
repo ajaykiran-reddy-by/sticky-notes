@@ -10,7 +10,7 @@ function SlideTransition(props: SlideProps) {
 }
 
 export function TransitionsSnackbar(props: any) {
-  const {open,message,resetSnackbar} = props;
+  const {open, message, resetSnackbar} = props;
 
 
     const [state, setState] = React.useState<{
@@ -49,7 +49,7 @@ export function TransitionsSnackbar(props: any) {
 
     function timeout(delay: number) {
       return new Promise( res => setTimeout(res, delay) );
-  }
+    }
 
     const handleClose = async () => {
       setState({
@@ -68,8 +68,23 @@ export function TransitionsSnackbar(props: any) {
             onClose={handleClose}
             TransitionComponent={state.Transition}
             message={message}
-            key={state.Transition.name}
+            key={state.Transition.name} 
             autoHideDuration={4000}
+            anchorOrigin={{vertical: 'bottom', horizontal: 'center'}}
+            
+            sx={{
+              "& .MuiSnackbarContent-root": {
+                backgroundColor: "#6e6e6eff", // Custom background color (green in this case)
+                color: "#fff", // White text
+                fontWeight: "bold", // Make text bold
+                borderRadius: "12px", // Rounded corners
+                boxShadow: "0 3px 6px rgba(0,0,0,0.1), 0 6px 12px rgba(0,0,0,0.2)", // Shadow effect
+                textAlign:'center',
+                display:'flex',
+                justifyContent:'center',
+                alignItems:'center',
+              },
+            }}
           />
         </div>
       );

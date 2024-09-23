@@ -6,7 +6,6 @@ import { Section } from "../types/type";
 import { motion } from "framer-motion";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { TransitionsSnackbar } from "./Snackbar";
-import { SettingsOutlined } from "@mui/icons-material";
 
 interface Props {
   openDialog: boolean;
@@ -47,7 +46,6 @@ const WorkspaceArea = ({ openDialog, handleCloseCb, cbInd }: Props) => {
   };
 
   const handleDragEnd = () => {
-    console.log("inside handle drop");
     setDraggedCardId(null);
   };
 
@@ -62,8 +60,6 @@ const WorkspaceArea = ({ openDialog, handleCloseCb, cbInd }: Props) => {
 
 
   const handleDrop = (e: any, targetColId: number | string) => {
-
-    console.log("inside handle drop");
     e.preventDefault();
     e.dataTransfer.dropEffect = "move";
 

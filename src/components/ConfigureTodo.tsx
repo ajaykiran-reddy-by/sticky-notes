@@ -12,7 +12,6 @@ import {
   MenuItem,
   Select,
   InputLabel,
-  FormControl,
   Box,
 } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
@@ -20,7 +19,7 @@ import { AvatarLookups, sectionLookups } from "../constants/constants";
 import { Section } from "../types/type";
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
-import TransitionsSnackbar from "./Snackbar";
+import { TransitionsSnackbar } from "./Snackbar";
 
 interface TodoCardProps {
   open: boolean;
@@ -65,6 +64,7 @@ export default function TodoCard({
   isEditMode,
 }: TodoCardProps) {
   const [formValues, setFormValues] = React.useState<FormState>(initState);
+  const [showSnackbar, setShowSnackbar] = useState(false);
   const sections = sectionLookups;
 
   const handleChange = (e: any) => {
@@ -74,6 +74,10 @@ export default function TodoCard({
       [name]: value,
     }));
   };
+
+  const resetSnackbar = () => {
+    setShowSnackbar(false)
+  }
 
   const handleSectionSelection = (section: any) => {
     setFormValues({
@@ -127,6 +131,8 @@ export default function TodoCard({
   }
 
   return (
+    <>
+    {showSnackbar && <TransitionsSnackbar open={showSnackbar} message={"Successfully created a card"} resetSnackbar={resetSnackbar} />}
     <Box>
       <Dialog
         open={open}
@@ -267,5 +273,6 @@ export default function TodoCard({
         </DialogActions>
       </Dialog>
     </Box>
+    </>
   );
 }
