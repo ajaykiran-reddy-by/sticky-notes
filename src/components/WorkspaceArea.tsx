@@ -2,10 +2,12 @@ import { Grid2, IconButton, Tooltip } from "@mui/material";
 import ColumnContainer from "./ColumnContainer";
 import { useEffect, useState } from "react";
 import { initialColumnsData } from "../constants/constants";
-import { Section } from "../types/type";
+import { Card, Section } from "../types/type";
 import { motion } from "framer-motion";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { TransitionsSnackbar } from "./Snackbar";
+import { SettingsOutlined } from "@mui/icons-material";
+import personal1 from "../SVGs/personal1.svg";
 
 interface Props {
   openDialog: boolean;
@@ -15,6 +17,7 @@ interface Props {
 
 const WorkspaceArea = ({ openDialog, handleCloseCb, cbInd }: Props) => {
   const [showSnackbar, setShowSnackbar] = useState(false);
+  const [snackbarMessage, setSnackbarMessage] = useState('')
 
   const initialiseSectionData = () => {
     let data: any = localStorage.getItem("columnsData") || "{}";
@@ -56,6 +59,7 @@ const WorkspaceArea = ({ openDialog, handleCloseCb, cbInd }: Props) => {
 
   const resetSnackbar = () => {
     setShowSnackbar(false)
+    setSnackbarMessage('')
   }
 
 
@@ -90,6 +94,7 @@ const WorkspaceArea = ({ openDialog, handleCloseCb, cbInd }: Props) => {
         updatedColumns[sourceColIndex] = updatedSourceCol;
         setColumns(updatedColumns);
         setOpenDelete(false);
+        setSnackbarMessage("Successfully deleted "+ cardToMove.title)
         setShowSnackbar(true);
   
         return;
@@ -163,9 +168,40 @@ const WorkspaceArea = ({ openDialog, handleCloseCb, cbInd }: Props) => {
     setTargetCardId(targetId);
   };
 
+
+  const AddCard = (sectionId: number) => {
+    const newCard : Card = {
+      id: new Date().getTime() + Math.random(),
+      title: "New Card",
+      content: "Edit this card to add some content!",
+      avatar: personal1,
+      dateTime: new Date(),
+      section: sectionId.toString(),
+    }
+
+    const sectionIndex = columns.findIndex(
+      (col) => col.sectionId === sectionId
+    );
+
+    const updatedSection = {
+      ...columns[sectionIndex],
+      cards: columns[sectionIndex].cards.concat([newCard]),
+    };
+
+    console.log(updatedSection,'[new card section]')
+
+    const updatedColumns = [...columns];
+    updatedColumns[sectionIndex] = updatedSection;
+
+    setColumns(updatedColumns)
+
+    setSnackbarMessage("Successfully created a card in " + columns[sectionIndex].sectionName)
+    setShowSnackbar(true);
+  }
+
   return (
     <>
-     {showSnackbar && <TransitionsSnackbar open={showSnackbar} message={'Successfully deleted a card'} resetSnackbar={resetSnackbar}/>}
+     {showSnackbar && <TransitionsSnackbar open={showSnackbar} message={snackbarMessage} resetSnackbar={resetSnackbar}/>}
       <Grid2 container spacing={3} style={{ position: "relative"}}>
         {columns.map((column, index) => (
           <Grid2 size={{ xs: 12, md: 6, lg: 4 }}>
@@ -185,6 +221,7 @@ const WorkspaceArea = ({ openDialog, handleCloseCb, cbInd }: Props) => {
                 handleDragEnd={handleDragEnd}
                 sectionColor={column.sectionColor}
                 handleCloseCb={handleCloseCb}
+                AddCard={AddCard}
                 swapCard={swapCard}
               />
             </motion.div>
