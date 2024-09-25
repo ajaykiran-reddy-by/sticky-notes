@@ -149,6 +149,21 @@ const AvatarLookups = [
   },
 ];
 
+const sizeOptions = [
+  {
+    title: "Large",
+    value: "L",
+  },
+  {
+    title: "Medium",
+    value: "M",
+  },
+  {
+    title: "Small",
+    value: "S",
+  },
+];
+
 const initialColumnsData = [
   {
     sectionName: "Personal",
@@ -157,8 +172,9 @@ const initialColumnsData = [
     cards: [
       {
         id: new Date().getTime() + Math.random(),
-        title: "Groceries List",
-        content: "Eggs, milk",
+        title: "",
+        content:
+          "Wake up at 5AM, Exercise/Stretch for 30 minutes , Shower and breakfast",
         avatar: personal1,
         dateTime: new Date(),
         section: 1,
@@ -166,7 +182,8 @@ const initialColumnsData = [
       {
         id: new Date().getTime() + Math.random(),
         title: "Reminder",
-        content: "Call John",
+        content:
+          "Grocery shopping, Pick up dry cleaning, Relax by watching cricket.",
         avatar: personal2,
         dateTime: new Date(),
         section: 1,
@@ -174,7 +191,7 @@ const initialColumnsData = [
       {
         id: new Date().getTime() + Math.random(),
         title: "Pending Tasks",
-        content: "",
+        content: "Clean the kitchen, Do laundry, Vacuum and tidy up",
         avatar: personal3,
         dateTime: new Date(),
         section: 1,
@@ -189,7 +206,8 @@ const initialColumnsData = [
       {
         id: new Date().getTime() + Math.random(),
         title: "FootBall",
-        content: "tournament at 9pm today",
+        content:
+          "Stretching (10-15 minutes) , Warm-up (jogging, jump rope, etc.), Hydration (drink 16-20 oz. of water)",
         avatar: sports1,
         dateTime: new Date(),
         section: 4,
@@ -197,7 +215,8 @@ const initialColumnsData = [
       {
         id: new Date().getTime() + Math.random(),
         title: "Tennis",
-        content: "Buy Tennis racquet",
+        content:
+          "Sport-specific drills (e.g., dribbling, passing, shooting for basketball/soccer), Focus on ball handling",
         avatar: sports2,
         dateTime: new Date(),
         section: 4,
@@ -205,7 +224,8 @@ const initialColumnsData = [
       {
         id: new Date().getTime() + Math.random(),
         title: "Things to buy",
-        content: "Buy airpump for VolleyBall",
+        content:
+          "Strength workout (e.g., squats, lunges, push-ups, core exercises), Cardio session (e.g., sprints, cycling, rowing), Recovery (foam rolling, cool-down stretches)",
         avatar: sports3,
         dateTime: new Date(),
         section: 4,
@@ -220,7 +240,8 @@ const initialColumnsData = [
       {
         id: new Date().getTime() + Math.random(),
         title: "Update Tempo",
-        content: "by the EOD",
+        content:
+          "Arrive on time, Organize workspace, Review today’s agenda and prioritize tasks",
         avatar: office1,
         dateTime: new Date(),
         section: 2,
@@ -228,7 +249,8 @@ const initialColumnsData = [
       {
         id: new Date().getTime() + Math.random(),
         title: "UI tasks",
-        content: "Add/Edit Modes, Delete functionality",
+        content:
+          "Check and respond to urgent emails, Follow up on pending messages, Send any necessary updates or reports",
         avatar: office2,
         dateTime: new Date(),
         section: 2,
@@ -236,7 +258,8 @@ const initialColumnsData = [
       {
         id: new Date().getTime() + Math.random(),
         title: "Leave Req",
-        content: "Send a mail to Manager about leave req",
+        content:
+          "Organize files and documents, Update project management tools (e.g., Trello, Asana) , File or digitize important paperwork",
         avatar: office3,
         dateTime: new Date(),
         section: 2,
@@ -251,7 +274,8 @@ const initialColumnsData = [
       {
         id: new Date().getTime() + Math.random(),
         title: "Places to visit",
-        content: "Vietnam, Thailand, Bali",
+        content:
+          "Book flights, accommodations, and transportation, Apply for visa (if required),Check passport validity (at least 6 months left),Purchase travel insurance,Arrange airport transfer or parking",
         avatar: travel1,
         dateTime: new Date(),
         section: 5,
@@ -259,7 +283,8 @@ const initialColumnsData = [
       {
         id: new Date().getTime() + Math.random(),
         title: "Things to pack for Intertional Vacation",
-        content: "Passport, Aadhar Card",
+        content:
+          "Research destinations and create a daily itinerary, Book tours or tickets for attractions (museums, activities), Make restaurant reservations (if needed)",
         avatar: travel2,
         dateTime: new Date(),
         section: 5,
@@ -267,7 +292,8 @@ const initialColumnsData = [
       {
         id: new Date().getTime() + Math.random(),
         title: "Essentials for roadtrip",
-        content: "Spare Tyre, Tools to change the tyre ",
+        content:
+          "Pack essentials (clothes, shoes, toiletries), Travel documents (passport, visa, tickets, itinerary, ID), Medications and first aid kit, Weather-appropriate gear (umbrella, sunglasses, sunscreen)",
         avatar: travel3,
         dateTime: new Date(),
         section: 5,
@@ -281,8 +307,18 @@ const initialColumnsData = [
     cards: [
       {
         id: new Date().getTime() + Math.random(),
-        title: "Biryani Recipie",
-        content: "Watch it in YT",
+        content:
+          "Decide on meals for the week/day,Check for dietary preferences or restrictions,Plan portion sizes and meal prep for leftovers",
+        title: "Watch it in YT",
+        avatar: cooking1,
+        dateTime: new Date(),
+        section: 3,
+      },
+      {
+        id: new Date().getTime() + Math.random(),
+        content:
+          "Check pantry/fridge for ingredients you already have, Make a grocery list based on recipes, Include kitchen staples (e.g., spices, oils, condiments).",
+        title: "Watch it in YT",
         avatar: cooking1,
         dateTime: new Date(),
         section: 3,
@@ -297,7 +333,8 @@ const initialColumnsData = [
       {
         id: new Date().getTime() + Math.random(),
         title: "Manage Cashflow",
-        content: "Call CA and manage it!",
+        content:
+          "Review last month’s expenses, Create a monthly budget (track income and expenses), Allocate funds to different categories (rent, utilities, groceries, savings, etc.),Set spending limits for discretionary items (entertainment, dining out),Use a budgeting tool or app to track expenses in real-time",
         avatar: finance1,
         dateTime: new Date(),
         section: 6,
@@ -305,7 +342,8 @@ const initialColumnsData = [
       {
         id: new Date().getTime() + Math.random(),
         title: "Apply for IPO",
-        content: "Arkade Developers",
+        content:
+          "List all monthly bills (utilities, rent, subscriptions, etc.), Set up automatic payments for recurring billsm,Ensure credit card balances are paid on time",
         avatar: finance2,
         dateTime: new Date(),
         section: 6,
@@ -313,7 +351,8 @@ const initialColumnsData = [
       {
         id: new Date().getTime() + Math.random(),
         title: "Savings",
-        content: "2.5L",
+        content:
+          "Set up automatic transfers to savings accounts, Set savings goals (e.g., emergency fund, vacation, new purchase),Track progress towards each goal",
         avatar: finance3,
         dateTime: new Date(),
         section: 6,
@@ -321,4 +360,4 @@ const initialColumnsData = [
     ],
   },
 ];
-export { sectionLookups, AvatarLookups, initialColumnsData };
+export { sectionLookups, AvatarLookups, initialColumnsData, sizeOptions };

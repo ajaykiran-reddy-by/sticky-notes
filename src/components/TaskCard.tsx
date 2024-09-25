@@ -70,19 +70,17 @@ const TaskCard = ({
           onDragEnd={() => handleDragEnd()}
           onDragEnter={() => swapCard(id)}
           sx={{
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
             borderRadius: "15px",
             boxShadow: isDragging ? "6px 6px" : "none",
             border: "2px solid #020202",
-            borderRight: "none",
-            padding: "10px",
+            padding: "5px",
             position: "relative",
-            overflow: "visible",
+            // overflow: "visible",
             backgroundColor: "#fff",
             marginTop: "10px",
-            width: "50%",
+            width: "100%",
+            height: "100px",
+            overflow: "scroll",
           }}
           onMouseEnter={() => setIsHovering(true)}
           onMouseLeave={() => setIsHovering(false)}
@@ -90,45 +88,9 @@ const TaskCard = ({
           <CardContent
             sx={{ flexGrow: 1, padding: "1rem", marginRight: "1rem" }}
           >
-            <Grid2 container>
-              <Grid2>
-                <img
-                  src={avatar}
-                  alt={title}
-                  style={{
-                    height: "30px",
-                    width: "30px",
-                    paddingRight: "0.2rem",
-                  }}
-                />
-              </Grid2>
-              <Grid2>
-                <Typography variant="body1" style={{ fontWeight: 600 }}>
-                  {title}
-                </Typography>
-              </Grid2>
-            </Grid2>
             <Typography variant="body2" sx={{ marginBottom: "8px" }}>
               {content}
             </Typography>
-            <div
-              style={{
-                width: "90%",
-                display: "flex",
-                justifyContent: "space-between",
-              }}
-            >
-              <Typography variant="caption" color="primary">
-                {new Date(dateTime).toLocaleDateString("en-GB")}
-              </Typography>
-              <Typography variant="caption" color="primary">
-                {new Date(dateTime).toLocaleTimeString([], {
-                  hour: "2-digit",
-                  minute: "2-digit",
-                })}
-              </Typography>
-            </div>
-            {/* <Grid2 size={2} style={{ backgroundColor: color }}></Grid2> */}
           </CardContent>
 
           <div
@@ -137,11 +99,11 @@ const TaskCard = ({
               top: 0,
               right: 0,
               width: "8%",
-              height: "100%",
+              height: "100px",
               backgroundColor: color,
               borderTopRightRadius: "12px",
-              borderBottomRightRadius: "12px",
-              borderRight: "2px solid black",
+              // borderBottomRightRadius: "12px",
+              // borderRight: "2px solid black",
             }}
           />
           {isHovering && (

@@ -15,10 +15,10 @@ import {
   Box,
 } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
-import { AvatarLookups, sectionLookups } from "../constants/constants";
 import { Section } from "../types/type";
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
+import { sectionLookups } from "../constants/constants";
 import { TransitionsSnackbar } from "./Snackbar";
 
 interface TodoCardProps {
@@ -65,7 +65,8 @@ export default function TodoCard({
 }: TodoCardProps) {
   const [formValues, setFormValues] = React.useState<FormState>(initState);
   const [showSnackbar, setShowSnackbar] = useState(false);
-  const sections = sectionLookups;
+  let sections: any = localStorage.getItem("columnsData") || "";
+  sections = sections ? JSON.parse(sections) : sectionLookups;
 
   const handleChange = (e: any) => {
     const { name, value } = e.target;
@@ -76,8 +77,8 @@ export default function TodoCard({
   };
 
   const resetSnackbar = () => {
-    setShowSnackbar(false)
-  }
+    setShowSnackbar(false);
+  };
 
   const handleSectionSelection = (section: any) => {
     setFormValues({
@@ -92,10 +93,12 @@ export default function TodoCard({
       setFormValues(formData);
     }
   }, [formData]);
+
   const handleSubmit = () => {
     let data: any = localStorage.getItem("columnsData") || "{}";
     data = JSON.parse(data) || null;
     let tempData = [...data];
+    console.log(formValues, "[formValues]");
 
     let targetSection = tempData.find(
       (sec: Section) => sec.sectionId === formValues.section
@@ -118,113 +121,102 @@ export default function TodoCard({
     localStorage.setItem("columnsData", JSON.stringify(tempData));
     onClose();
     setFormValues(initState);
-    
   };
 
   function getDisabledStatus() {
-    return (
-      !formValues.title ||
-      !formValues.content ||
-      !formValues.section ||
-      !formValues.avatar
-    );
+    return !formValues.content || !formValues.section;
   }
+
+  console.log(formValues);
 
   return (
     <>
-    {showSnackbar && <TransitionsSnackbar open={showSnackbar} message={"Successfully created a card"} resetSnackbar={resetSnackbar} />}
-    <Box>
-      <Dialog
-        open={open}
-        TransitionComponent={Transition}
-        keepMounted
-        onClose={onClose}
-        aria-describedby="alert-dialog-slide-description"
-        maxWidth="sm"
-        fullWidth
-      >
-        <DialogTitle>
-          {isEditMode ? `Edit ${formValues.title}` : " Add Note"}
+      {showSnackbar && (
+        <TransitionsSnackbar
+          open={showSnackbar}
+          message={"Successfully created a card"}
+          resetSnackbar={resetSnackbar}
+        />
+      )}
+      <Box>
+        <Dialog
+          open={open}
+          TransitionComponent={Transition}
+          keepMounted
+          onClose={onClose}
+          aria-describedby="alert-dialog-slide-description"
+          maxWidth="sm"
+          fullWidth
+        >
+          <DialogTitle>
+            {isEditMode ? `Edit Note` : " Add Note"}
 
-          <IconButton
-            aria-label="close"
-            onClick={onClose}
-            sx={{ position: "absolute", right: 8, top: 8 }}
-          >
-            <CloseIcon />
-          </IconButton>
-        </DialogTitle>
-        <DialogContent>
-          <div style={{ overflowX: "hidden" }}>
-            <motion.div
-              whileInView={{ opacity: 1, x: 0 }}
-              initial={{ opacity: 0, x: -100 }}
-              transition={{ duration: 1, delay: 0.5 }}
+            <IconButton
+              aria-label="close"
+              onClick={onClose}
+              sx={{ position: "absolute", right: 8, top: 8 }}
             >
-              <TextField
-                onChange={handleChange}
-                value={formValues.title}
-                autoFocus
-                required
-                margin="dense"
-                id="task-name"
-                name="title"
-                label="Task Name"
-                type="text"
-                fullWidth
-                variant="standard"
-                placeholder="Enter task name"
-              />
-              <TextField
-                onChange={handleChange}
-                value={formValues.content}
-                required
-                margin="dense"
-                id="description"
-                name="content"
-                label="Description"
-                type="text"
-                fullWidth
-                variant="standard"
-                placeholder="Enter task description"
-              />
-            </motion.div>
-            <motion.div
-              whileInView={{ opacity: 1, x: 0 }}
-              initial={{ opacity: 0, x: 100 }}
-              transition={{ duration: 1, delay: 0.5 }}
-            >
-              <>
-                <InputLabel required>Section</InputLabel>
-                <Select
-                  labelId="section-label"
-                  id="section"
-                  name="section"
-                  value={formValues.section}
-                  variant="standard"
+              <CloseIcon />
+            </IconButton>
+          </DialogTitle>
+          <DialogContent>
+            <div style={{ overflowX: "hidden" }}>
+              <motion.div
+                whileInView={{ opacity: 1, x: 0 }}
+                initial={{ opacity: 0, x: -100 }}
+                transition={{ duration: 1, delay: 0.5 }}
+              >
+                <TextField
+                  onChange={handleChange}
+                  value={formValues.content}
+                  required
+                  margin="dense"
+                  id="description"
+                  name="content"
+                  label="Description"
+                  type="text"
                   fullWidth
-                >
-                  {sections.map((section) => {
-                    return (
-                      <MenuItem
-                        key={section.name}
-                        value={section.sectionId}
-                        onClick={() => handleSectionSelection(section)}
-                        style={
-                          {
-                            // backgroundColor: section.color,
-                            // fontWeight: "bold",
-                            // opacity: "80%",
+                  variant="standard"
+                  placeholder="Enter task description"
+                  multiline
+                />
+              </motion.div>
+              <motion.div
+                whileInView={{ opacity: 1, x: 0 }}
+                initial={{ opacity: 0, x: 100 }}
+                transition={{ duration: 1, delay: 0.5 }}
+              >
+                <>
+                  <InputLabel required>Group</InputLabel>
+                  <Select
+                    labelId="section-label"
+                    id="section"
+                    name="section"
+                    value={formValues.section}
+                    variant="standard"
+                    fullWidth
+                  >
+                    {sections.map((section: any) => {
+                      return (
+                        <MenuItem
+                          key={section.sectionName}
+                          value={section.sectionId}
+                          onClick={() => handleSectionSelection(section)}
+                          style={
+                            {
+                              // backgroundColor: section.color,
+                              // fontWeight: "bold",
+                              // opacity: "80%",
+                            }
                           }
-                        }
-                      >
-                        {section.name}
-                      </MenuItem>
-                    );
-                  })}
-                </Select>
-              </>
-              <>
+                        >
+                          {section.sectionName}
+                        </MenuItem>
+                      );
+                    })}
+                  </Select>
+                </>
+                {/* <>
                 <InputLabel required id="Avatar-label">
                   Pick Avatar
                 </InputLabel>
@@ -250,29 +242,29 @@ export default function TodoCard({
                     </MenuItem>
                   ))}
                 </Select>
-              </>
-            </motion.div>
-          </div>
-        </DialogContent>
-        <DialogActions>
-          <motion.div
-            className="box"
-            whileHover={{ scale: 1.1 }}
-            whileTap={{ scale: 0.9 }}
-            transition={{ type: "spring", stiffness: 400, damping: 20 }}
-          >
-            <Button
-              disabled={getDisabledStatus()}
-              onClick={handleSubmit}
-              color="primary"
-              variant="contained"
+              </> */}
+              </motion.div>
+            </div>
+          </DialogContent>
+          <DialogActions>
+            <motion.div
+              className="box"
+              whileHover={{ scale: 1.1 }}
+              whileTap={{ scale: 0.9 }}
+              transition={{ type: "spring", stiffness: 400, damping: 20 }}
             >
-              Submit
-            </Button>
-          </motion.div>
-        </DialogActions>
-      </Dialog>
-    </Box>
+              <Button
+                disabled={getDisabledStatus()}
+                onClick={handleSubmit}
+                color="primary"
+                variant="contained"
+              >
+                Submit
+              </Button>
+            </motion.div>
+          </DialogActions>
+        </Dialog>
+      </Box>
     </>
   );
 }
